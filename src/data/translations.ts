@@ -1,6 +1,7 @@
 import type { AppLanguage } from "../types/resume";
 
 const en = {
+  footerLinks: "Project links", createdBy: "Created by", sourceCode: "Source code", mitLicense: "MIT License", sponsorProject: "Sponsor", sponsorProjectHelp: "Support BeeTales on GitHub Sponsors",
   textMode: "Text mode", textModeHelp: "Edit and automate the resume using structured text.", textModeBadge: "YAML / Markdown",
   textSyncTitle: "Two-way local synchronization.", textSyncHelp: "Valid YAML changes are applied automatically to the visual editor after a short pause.", textMarkdownHelp: "Edit the YAML front matter. The readable Markdown section is regenerated after synchronization.",
   textFormat: "Text format", yamlFormat: "YAML — automation", markdownFormat: "Markdown — readable", textEditorLabel: "Structured resume text editor",
@@ -144,6 +145,7 @@ export type TranslationKey = keyof typeof en;
 export type Translator = (key: TranslationKey) => string;
 
 const es: Record<TranslationKey, string> = {
+  footerLinks: "Enlaces del proyecto", createdBy: "Creado por", sourceCode: "Código fuente", mitLicense: "Licencia MIT", sponsorProject: "Patrocinar", sponsorProjectHelp: "Apoya BeeTales en GitHub Sponsors",
   textMode: "Modo texto", textModeHelp: "Edita y automatiza el currículum mediante texto estructurado.", textModeBadge: "YAML / Markdown",
   textSyncTitle: "Sincronización local bidireccional.", textSyncHelp: "Los cambios YAML válidos se aplican automáticamente al editor visual después de una breve pausa.", textMarkdownHelp: "Edita el encabezado YAML. La sección Markdown legible se regenera después de sincronizar.",
   textFormat: "Formato de texto", yamlFormat: "YAML — automatización", markdownFormat: "Markdown — legible", textEditorLabel: "Editor de texto estructurado del currículum",
@@ -181,6 +183,7 @@ const es: Record<TranslationKey, string> = {
 };
 
 const pl: Record<TranslationKey, string> = {
+  footerLinks: "Linki projektu", createdBy: "Autor", sourceCode: "Kod źródłowy", mitLicense: "Licencja MIT", sponsorProject: "Wesprzyj", sponsorProjectHelp: "Wesprzyj BeeTales w GitHub Sponsors",
   textMode: "Tryb tekstowy", textModeHelp: "Edytuj i automatyzuj CV za pomocą tekstu strukturalnego.", textModeBadge: "YAML / Markdown",
   textSyncTitle: "Lokalna synchronizacja dwukierunkowa.", textSyncHelp: "Prawidłowe zmiany YAML są automatycznie stosowane w edytorze wizualnym po krótkiej przerwie.", textMarkdownHelp: "Edytuj nagłówek YAML. Czytelna sekcja Markdown jest generowana ponownie po synchronizacji.",
   textFormat: "Format tekstu", yamlFormat: "YAML — automatyzacja", markdownFormat: "Markdown — czytelny", textEditorLabel: "Edytor strukturalnego tekstu CV",
@@ -218,6 +221,7 @@ const pl: Record<TranslationKey, string> = {
 };
 
 const pt: Record<TranslationKey, string> = {
+  footerLinks: "Links do projeto", createdBy: "Criado por", sourceCode: "Código-fonte", mitLicense: "Licença MIT", sponsorProject: "Patrocinar", sponsorProjectHelp: "Apoie o BeeTales no GitHub Sponsors",
   textMode: "Modo de texto", textModeHelp: "Edite e automatize o currículo usando texto estruturado.", textModeBadge: "YAML / Markdown",
   textSyncTitle: "Sincronização local bidirecional.", textSyncHelp: "Alterações YAML válidas são aplicadas automaticamente ao editor visual após uma breve pausa.", textMarkdownHelp: "Edite o cabeçalho YAML. A seção Markdown legível é regenerada após a sincronização.",
   textFormat: "Formato de texto", yamlFormat: "YAML — automação", markdownFormat: "Markdown — legível", textEditorLabel: "Editor de texto estruturado do currículo",

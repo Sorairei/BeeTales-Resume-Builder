@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Eye, FileText, Languages, LayoutTemplate, Leaf, RotateCcw, SearchCheck, ShieldCheck, Sparkles } from "lucide-react";
+import { Code2, Eye, FileText, Heart, Languages, LayoutTemplate, Leaf, RotateCcw, Scale, SearchCheck, ShieldCheck, Sparkles } from "lucide-react";
 import { AtsReviewPanel } from "./components/ats/AtsReviewPanel";
 import { BrandLogo } from "./components/common/BrandLogo";
 import { EditorPanel } from "./components/editor/EditorPanel";
@@ -76,6 +76,26 @@ export default function App() {
         <div className={`workspace-review ${mobileTab !== "review" ? "mobile-hidden" : ""}`}><AtsReviewPanel resume={resumeState.resume} pageCount={pageCount} t={t} standalone /></div>
         <div className={`workspace-preview ${mobileTab !== "preview" ? "mobile-hidden" : ""}`}><PreviewPanel resume={resumeState.resume} photoUrl={resumeState.photoUrl} onPageCountChange={setPageCount} /></div>
       </main>
+
+      <footer className="app-footer">
+        <div className="footer-owner">
+          <span>© {new Date().getFullYear()} BeeTales</span>
+          <a href="https://github.com/Sorairei" target="_blank" rel="noreferrer">
+            <Code2 size={14} aria-hidden="true" /> {t("createdBy")} Sorairei
+          </a>
+        </div>
+        <nav className="footer-links" aria-label={t("footerLinks")}>
+          <a href="https://github.com/Sorairei/BeeTales-Resume-Builder" target="_blank" rel="noreferrer">
+            <Code2 size={14} aria-hidden="true" /> {t("sourceCode")}
+          </a>
+          <a href="https://github.com/Sorairei/BeeTales-Resume-Builder/blob/main/LICENSE" target="_blank" rel="noreferrer">
+            <Scale size={14} aria-hidden="true" /> {t("mitLicense")}
+          </a>
+        </nav>
+        <a className="github-sponsor-button" href="https://github.com/sponsors/Sorairei" target="_blank" rel="noreferrer" aria-label={t("sponsorProjectHelp")} title={t("sponsorProjectHelp")}>
+          <Heart size={15} aria-hidden="true" /> {t("sponsorProject")}
+        </a>
+      </footer>
     </div>
   );
 }

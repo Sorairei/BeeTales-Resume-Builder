@@ -138,9 +138,60 @@ a:focus-visible {
 
 .workspace {
   grid-template-columns: minmax(500px, .9fr) minmax(590px, 1.1fr);
-  height: calc(100vh - 116px);
+  height: calc(100vh - 169px);
   background: var(--bg);
 }
+
+.app-footer {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 7px 24px;
+  border-top: 1px solid #c8d3ca;
+  background: #f9faf7;
+  color: #63746a;
+  font-size: .66rem;
+}
+
+.footer-owner,
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #355b45;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.app-footer a:hover { color: #1c5d3a; text-decoration: underline; }
+
+.github-sponsor-button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  background: #f6f8fa;
+  box-shadow: 0 1px 0 rgba(31, 35, 40, .04), inset 0 1px 0 rgba(255, 255, 255, .25);
+  color: #24292f !important;
+  font-weight: 700 !important;
+}
+
+.github-sponsor-button:hover {
+  border-color: #b8c0c8;
+  background: #eef1f4;
+  color: #24292f !important;
+  text-decoration: none !important;
+}
+
+.github-sponsor-button svg { color: #bf3989; fill: currentColor; }
 
 .editor-panel {
   padding: 34px clamp(24px, 3vw, 48px) 76px;
@@ -646,9 +697,10 @@ a:focus-visible {
 
 @media (max-width: 900px) {
   .app-header { background: #fff; }
-  .workspace { min-height: calc(100vh - 152px); background: #f3f5f0; }
+  .workspace { min-height: calc(100vh - 202px); background: #f3f5f0; }
   .editor-panel { border-right: 0; }
   .preview-panel { background: #113724; }
+  .app-footer { flex-wrap: wrap; gap: 8px 18px; padding: 10px 14px; }
 }
 
 @media (max-width: 560px) {
@@ -659,4 +711,7 @@ a:focus-visible {
   .editor-panel { padding-inline: 14px; }
   .panel-heading { grid-template-columns: 40px 1fr; }
   .panel-heading-icon { width: 40px; height: 40px; }
+  .app-footer { justify-content: center; }
+  .footer-owner { width: 100%; justify-content: center; }
+  .footer-links { gap: 12px; }
 }
