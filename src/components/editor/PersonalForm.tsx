@@ -1,6 +1,7 @@
 import { UserRound } from "lucide-react";
 import type { TranslationKey, Translator } from "../../data/translations";
 import type { PersonalInformation } from "../../types/resume";
+import { validatePersonalField } from "../../utils/validation";
 import { Accordion } from "./Accordion";
 
 interface Props { personal: PersonalInformation; onChange: (field: keyof PersonalInformation, value: string) => void; t: Translator; }
@@ -24,12 +25,15 @@ export function PersonalForm({ personal, onChange, t }: Props) {
   return (
     <Accordion title={t("personalInfo")} description={t("personalInfoHelp")} icon={<UserRound size={18} />} defaultOpen badge={t("essential")}>
       <div className="form-grid">
-        {fields.map((field) => (
-          <label className={`field ${field.wide ? "field-wide" : ""}`} key={field.key}>
+        {fields.map((field) => {
+          const issue = validatePersonalField(field.key, personal[field.key]);
+          const errorId = `personal-${field.key}-error`;
+          return <label className={`field ${field.wide ? "field-wide" : ""} ${issue ? "field-invalid" : ""}`} key={field.key}>
             <span>{t(field.label)}</span>
-            <input type={field.type ?? "text"} value={personal[field.key]} onChange={(event) => onChange(field.key, event.target.value)} placeholder={field.placeholder ? t(field.placeholder) : field.literalPlaceholder} maxLength={field.key === "professionalTitle" ? 100 : 180} />
-          </label>
-        ))}
+            <input type={field.type ?? "text"} value={personal[field.key]} onChange={(event) => onChange(field.key, event.target.value)} placeholder={field.placeholder ? t(field.placeholder) : field.literalPlaceholder} maxLength={field.key === "professionalTitle" ? 100 : field.key === "email" ? 254 : 180} aria-invalid={issue ? "true" : undefined} aria-describedby={issue ? errorId : undefined} />
+            {issue && <small className="field-error" id={errorId}>{t(issue)}</small>}
+          </label>;
+        })}
       </div>
     </Accordion>
   );

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { defaultResume } from "../data/defaultResume";
 import { emptyResume } from "../data/emptyResume";
 import { clearResume, loadResume, saveResume } from "../services/storageService";
 import { deletePhoto, loadPhoto, processPhoto, savePhoto } from "../services/imageService";
+import { createBackupJson, downloadBackup, readBackupFile } from "../services/backupService";
 import type { ExperienceItem, PersonalInformation, ResumeData, SaveStatus } from "../types/resume";
 import { createId } from "../utils/id";
 
@@ -17,6 +18,7 @@ export function useResume() {
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("saved");
   const [photoUrl, setPhotoUrl] = useState<string>();
   const [photoError, setPhotoError] = useState<string>();
+  const skipNextSave = useRef(false);
 
   const setResume: React.Dispatch<React.SetStateAction<ResumeData>> = (action) => {
     setSaveStatus("saving");
@@ -24,6 +26,7 @@ export function useResume() {
   };
 
   useEffect(() => {
+    if (skipNextSave.current) { skipNextSave.current = false; return; }
     const timer = window.setTimeout(() => {
       try {
         saveResume(resume);
@@ -84,7 +87,11 @@ export function useResume() {
   });
   const removeExperience = (id: string) => setResume((current) => ({ ...current, experience: current.experience.filter((item) => item.id !== id) }));
 
-  const useExample = () => setResume((current) => ({ ...clone(defaultResume), language: current.language }));
+  const useExample = () => {
+    void deletePhoto().catch(() => undefined);
+    setPhotoUrl((current) => { if (current) URL.revokeObjectURL(current); return undefined; });
+    setResume((current) => ({ ...clone(defaultResume), language: current.language }));
+  };
   const createEmpty = () => {
     clearResume();
     void deletePhoto().catch(() => undefined);
@@ -112,5 +119,36 @@ export function useResume() {
     setResume((current) => ({ ...current, personal: { ...current.personal, photo: "" }, settings: { ...current.settings, showPhoto: false } }));
   };
 
-  return { resume, setResume, saveStatus, photoUrl, photoError, uploadPhoto, removePhoto, updatePersonal, updateExperience, updateAchievement, addAchievement, removeAchievement, addExperience, duplicateExperience, removeExperience, useExample, createEmpty };
+  const exportBackup = async () => {
+    const photo = resume.personal.photo ? await loadPhoto() : null;
+    const backup = await createBackupJson(resume, photo);
+    downloadBackup(backup.content, backup.fileName);
+  };
+
+  const importBackup = async (file: File) => {
+    const imported = await readBackupFile(file);
+    let importedResume = imported.resume;
+    if (imported.photo) {
+      await savePhoto(imported.photo);
+      importedResume = { ...importedResume, personal: { ...importedResume.personal, photo: `indexeddb:resume-photo:${Date.now()}` } };
+    } else {
+      await deletePhoto().catch(() => undefined);
+      setPhotoUrl((current) => { if (current) URL.revokeObjectURL(current); return undefined; });
+      importedResume = { ...importedResume, personal: { ...importedResume.personal, photo: "" }, settings: { ...importedResume.settings, showPhoto: false } };
+    }
+    setPhotoError(undefined);
+    setResume(importedResume);
+  };
+
+  const deleteAllData = async () => {
+    skipNextSave.current = true;
+    clearResume();
+    await deletePhoto().catch(() => undefined);
+    setPhotoError(undefined);
+    setPhotoUrl((current) => { if (current) URL.revokeObjectURL(current); return undefined; });
+    setSaveStatus("saved");
+    setResumeState(clone(emptyResume));
+  };
+
+  return { resume, setResume, saveStatus, photoUrl, photoError, uploadPhoto, removePhoto, exportBackup, importBackup, deleteAllData, updatePersonal, updateExperience, updateAchievement, addAchievement, removeAchievement, addExperience, duplicateExperience, removeExperience, useExample, createEmpty };
 }

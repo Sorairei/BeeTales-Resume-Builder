@@ -1,4 +1,5 @@
 import type { ResumeData } from "../types/resume";
+import { migrateResumeData } from "../utils/migrations";
 
 export const STORAGE_KEY = "beetales_resume_builder_data";
 
@@ -7,18 +8,7 @@ export function loadResume(): ResumeData | null {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return null;
     const parsed: unknown = JSON.parse(stored);
-    if (!parsed || typeof parsed !== "object" || !("version" in parsed) || !("personal" in parsed)) return null;
-    const resume = parsed as ResumeData;
-    if (resume.version === 1) {
-      return { ...resume, version: 4, language: "en", referenceMode: "full", settings: { ...resume.settings, photoZoom: 1, photoPositionX: 50, photoPositionY: 50 } };
-    }
-    if (resume.version === 2) {
-      return { ...resume, version: 4, referenceMode: "full", settings: { ...resume.settings, photoZoom: 1, photoPositionX: 50, photoPositionY: 50 } };
-    }
-    if (resume.version === 3) {
-      return { ...resume, version: 4, settings: { ...resume.settings, photoZoom: 1, photoPositionX: 50, photoPositionY: 50 } };
-    }
-    return resume;
+    return migrateResumeData(parsed);
   } catch {
     return null;
   }

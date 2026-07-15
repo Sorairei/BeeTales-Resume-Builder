@@ -1,14 +1,16 @@
 import type { Dispatch, SetStateAction } from "react";
 import { ArrowDown, ArrowUp, Award, BookOpen, ContactRound, FolderKanban, GraduationCap, Languages, Plus, Shapes, Trash2, Wrench } from "lucide-react";
-import type { Translator } from "../../data/translations";
+import type { TranslationKey, Translator } from "../../data/translations";
 import type { CertificationItem, CourseItem, CustomSection, EducationItem, LanguageItem, ProjectItem, ReferenceItem, ResumeData, SkillItem } from "../../types/resume";
 import { createId } from "../../utils/id";
 import { moveItem } from "../../utils/arrays";
+import { isValidEmail, isValidPhone, isValidWebAddress } from "../../utils/validation";
 import { CollectionSection } from "./CollectionSection";
 
 interface Props { resume: ResumeData; setResume: Dispatch<SetStateAction<ResumeData>>; t: Translator; }
 
 const field = (label: string, control: React.ReactNode, wide = false) => <label className={`field ${wide ? "field-wide" : ""}`}><span>{label}</span>{control}</label>;
+const validatedField = (label: string, control: React.ReactNode, issue: TranslationKey | undefined, t: Translator, wide = false) => <label className={`field ${wide ? "field-wide" : ""} ${issue ? "field-invalid" : ""}`}><span>{label}</span>{control}{issue && <small className="field-error">{t(issue)}</small>}</label>;
 
 export function Stage2Sections({ resume, setResume, t }: Props) {
   const setCollection = <K extends keyof ResumeData>(key: K, value: ResumeData[K]) => setResume((current) => ({ ...current, [key]: value }));
@@ -68,7 +70,7 @@ export function Stage2Sections({ resume, setResume, t }: Props) {
           {field(t("issueDate"), <input type="month" value={item.issueDate} onChange={(e) => update({ issueDate: e.target.value })} />)}
           {field(t("expirationDate"), <input type="month" value={item.expirationDate} onChange={(e) => update({ expirationDate: e.target.value })} />)}
           {field(t("credentialId"), <input value={item.credentialId} onChange={(e) => update({ credentialId: e.target.value })} placeholder={t("optional")} />)}
-          {field(t("credentialUrl"), <input type="url" value={item.url} onChange={(e) => update({ url: e.target.value })} placeholder="https://" />)}
+          {validatedField(t("credentialUrl"), <input type="url" value={item.url} onChange={(e) => update({ url: e.target.value })} placeholder="https://" />, isValidWebAddress(item.url) ? undefined : "invalidUrl", t)}
         </div>}
       />
 
@@ -82,8 +84,8 @@ export function Stage2Sections({ resume, setResume, t }: Props) {
           {field(t("date"), <input value={item.date} onChange={(e) => update({ date: e.target.value })} placeholder="2025" />)}
           {field(t("description"), <textarea rows={3} value={item.description} onChange={(e) => update({ description: e.target.value })} placeholder={t("projectDescriptionPlaceholder")} />, true)}
           {field(t("technologies"), <input value={item.technologies.join(", ")} onChange={(e) => update({ technologies: e.target.value.split(",").map((value) => value.trim()).filter(Boolean) })} placeholder={t("technologiesPlaceholder")} />, true)}
-          {field(t("projectUrl"), <input type="url" value={item.url} onChange={(e) => update({ url: e.target.value })} placeholder="https://" />)}
-          {field(t("repository"), <input type="url" value={item.repository} onChange={(e) => update({ repository: e.target.value })} placeholder="https://github.com/" />)}
+          {validatedField(t("projectUrl"), <input type="url" value={item.url} onChange={(e) => update({ url: e.target.value })} placeholder="https://" />, isValidWebAddress(item.url) ? undefined : "invalidUrl", t)}
+          {validatedField(t("repository"), <input type="url" value={item.repository} onChange={(e) => update({ repository: e.target.value })} placeholder="https://github.com/" />, isValidWebAddress(item.repository) ? undefined : "invalidUrl", t)}
           {field(t("achievements"), <textarea rows={3} value={item.achievements.join("\n")} onChange={(e) => update({ achievements: e.target.value.split("\n") })} placeholder={t("oneAchievementPerLine")} />, true)}
         </div>}
       />
@@ -99,7 +101,7 @@ export function Stage2Sections({ resume, setResume, t }: Props) {
           {field(t("date"), <input value={item.date} onChange={(e) => update({ date: e.target.value })} placeholder="2025" />)}
           {field(t("duration"), <input value={item.duration} onChange={(e) => update({ duration: e.target.value })} placeholder={t("durationPlaceholder")} />)}
           {field(t("description"), <textarea rows={3} value={item.description} onChange={(e) => update({ description: e.target.value })} placeholder={t("optional")} />, true)}
-          {field(t("courseUrl"), <input type="url" value={item.url} onChange={(e) => update({ url: e.target.value })} placeholder="https://" />, true)}
+          {validatedField(t("courseUrl"), <input type="url" value={item.url} onChange={(e) => update({ url: e.target.value })} placeholder="https://" />, isValidWebAddress(item.url) ? undefined : "invalidUrl", t, true)}
         </div>}
       />
 
@@ -114,8 +116,8 @@ export function Stage2Sections({ resume, setResume, t }: Props) {
           {field(t("position"), <input value={item.position} onChange={(e) => update({ position: e.target.value })} placeholder={t("professionalTitlePlaceholder")} />)}
           {field(t("company"), <input value={item.company} onChange={(e) => update({ company: e.target.value })} placeholder={t("companyPlaceholder")} />)}
           {field(t("relationship"), <input value={item.relationship} onChange={(e) => update({ relationship: e.target.value })} placeholder={t("optional")} />)}
-          {field(t("phone"), <input type="tel" value={item.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="+1 555 000 0000" />)}
-          {field(t("email"), <input type="email" value={item.email} onChange={(e) => update({ email: e.target.value })} placeholder={t("emailPlaceholder")} />)}
+          {validatedField(t("phone"), <input type="tel" value={item.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="+1 555 000 0000" />, isValidPhone(item.phone) ? undefined : "invalidPhone", t)}
+          {validatedField(t("email"), <input type="email" value={item.email} onChange={(e) => update({ email: e.target.value })} placeholder={t("emailPlaceholder")} />, isValidEmail(item.email) ? undefined : "invalidEmail", t)}
         </div>}
       />
 
@@ -147,7 +149,7 @@ export function Stage2Sections({ resume, setResume, t }: Props) {
                 {field(t("itemTitle"), <input value={item.title} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, title: e.target.value } : entry) })} />)}
                 {field(t("dateRange"), <div className="date-pair"><input value={item.startDate} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, startDate: e.target.value } : entry) })} placeholder={t("startDate")} /><input value={item.endDate} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, endDate: e.target.value } : entry) })} placeholder={t("endDate")} /></div>)}
                 {field(t("description"), <textarea rows={2} value={item.description} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, description: e.target.value } : entry) })} />, true)}
-                {field(t("link"), <input type="url" value={item.url} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, url: e.target.value } : entry) })} placeholder="https://" />, true)}
+                {validatedField(t("link"), <input type="url" value={item.url} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, url: e.target.value } : entry) })} placeholder="https://" />, isValidWebAddress(item.url) ? undefined : "invalidUrl", t, true)}
               </div>
             </div>)}
             <button type="button" className="text-button" onClick={() => updateSection({ items: [...section.items, { id: createId("custom-item"), title: "", description: "", startDate: "", endDate: "", url: "" }] })}><Plus size={15} /> {t("addItem")}</button>
