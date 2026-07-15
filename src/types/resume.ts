@@ -1,5 +1,5 @@
 export type AppLanguage = "en" | "es" | "pl" | "pt";
-export type ResumeTemplate = "ats-classic" | "modern" | "executive" | "two-column";
+export type ResumeTemplate = "ats-classic" | "modern" | "executive" | "two-column" | "swiss-grid" | "tech-compact" | "timeline" | "studio";
 
 export interface ResumeSettings {
   template: ResumeTemplate;
@@ -10,6 +10,7 @@ export interface ResumeSettings {
   dividerStyle: "solid" | "thin" | "none";
   showPhoto: boolean;
   photoShape: "circle" | "rectangle";
+  photoSize: "small" | "medium" | "large";
   photoZoom: number;
   photoPositionX: number;
   photoPositionY: number;

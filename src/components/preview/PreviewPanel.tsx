@@ -7,7 +7,7 @@ import { AtsClassicTemplate } from "./AtsClassicTemplate";
 
 interface Props { resume: ResumeData; photoUrl?: string; onPageCountChange?: (count: number) => void; }
 
-const templateKeys = { "ats-classic": "atsClassic", modern: "modernTemplate", executive: "executiveTemplate", "two-column": "twoColumnTemplate" } as const;
+const templateKeys = { "ats-classic": "atsClassic", modern: "modernTemplate", executive: "executiveTemplate", "two-column": "twoColumnTemplate", "swiss-grid": "swissGridTemplate", "tech-compact": "techCompactTemplate", timeline: "timelineTemplate", studio: "studioTemplate" } as const;
 
 export function PreviewPanel({ resume, photoUrl, onPageCountChange }: Props) {
   const [zoom, setZoom] = useState(72);

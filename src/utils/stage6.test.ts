@@ -6,12 +6,12 @@ import { translations } from "../data/translations";
 import { moveItem } from "./arrays";
 import { migrateResumeData } from "./migrations";
 import { normalizeHiddenSections, normalizeSectionOrder } from "./sectionOrder";
-import { splitTwoColumnSections } from "./templateLayout";
+import { splitTwoColumnSections, usesSidebarLayout } from "./templateLayout";
 
 describe("Stage 6 interface and ordering safeguards", () => {
-  it("exposes four distinct template choices", () => {
+  it("exposes eight distinct template choices", () => {
     const ids = resumeTemplates.map((template) => template.id);
-    expect(ids).toEqual(["ats-classic", "modern", "executive", "two-column"]);
+    expect(ids).toEqual(["ats-classic", "modern", "executive", "two-column", "swiss-grid", "tech-compact", "timeline", "studio"]);
     expect(new Set(ids).size).toBe(ids.length);
   });
 
@@ -55,5 +55,13 @@ describe("Stage 6 interface and ordering safeguards", () => {
     const columns = splitTwoColumnSections(["summary", "experience", "skills", "education", "languages", "projects"]);
     expect(columns.sidebar).toEqual(["skills", "languages"]);
     expect(columns.main).toEqual(["summary", "experience", "education", "projects"]);
+  });
+
+  it("only assigns the independent sidebar layout to compatible templates", () => {
+    expect(usesSidebarLayout("two-column")).toBe(true);
+    expect(usesSidebarLayout("studio")).toBe(true);
+    expect(usesSidebarLayout("swiss-grid")).toBe(false);
+    expect(usesSidebarLayout("tech-compact")).toBe(false);
+    expect(usesSidebarLayout("timeline")).toBe(false);
   });
 });

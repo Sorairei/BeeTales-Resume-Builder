@@ -11,10 +11,11 @@ describe("Stage 4 data safeguards", () => {
     const legacy = structuredClone(defaultResume) as unknown as Record<string, unknown>;
     legacy.version = 3;
     const settings = legacy.settings as Record<string, unknown>;
-    delete settings.photoZoom; delete settings.photoPositionX; delete settings.photoPositionY;
+    delete settings.photoSize; delete settings.photoZoom; delete settings.photoPositionX; delete settings.photoPositionY;
     const migrated = migrateResumeData(legacy);
     expect(migrated.version).toBe(4);
     expect(migrated.settings.photoZoom).toBe(1);
+    expect(migrated.settings.photoSize).toBe("medium");
     expect(migrated.settings.photoPositionX).toBe(50);
   });
 

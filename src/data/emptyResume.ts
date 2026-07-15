@@ -12,6 +12,7 @@ export const emptyResume: ResumeData = {
     dividerStyle: "thin",
     showPhoto: false,
     photoShape: "circle",
+    photoSize: "medium",
     photoZoom: 1,
     photoPositionX: 50,
     photoPositionY: 50,

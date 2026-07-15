@@ -45,7 +45,7 @@ export function analyzeResume(resume: ResumeData, pageCount = 1): AtsAnalysis {
   if (pageCount > 2) results.push(observation("atsTooManyPages", "warning", 10));
   else results.push(observation(pageCount === 2 ? "atsTwoPages" : "atsOnePage", "correct"));
   if (resume.settings.showPhoto && resume.personal.photo) results.push(observation("atsPhotoUsed", "recommendation", 3));
-  if (resume.settings.template === "two-column") results.push(observation("atsTwoColumnsUsed", "recommendation", 6));
+  if (["two-column", "studio"].includes(resume.settings.template)) results.push(observation("atsTwoColumnsUsed", "recommendation", 6));
   else if (resume.settings.template === "ats-classic") results.push(observation("atsTemplateGood", "correct"));
   if (!hasSafeAccentContrast(resume.settings.accentColor)) results.push(observation("atsLowContrast", "warning", 7));
 

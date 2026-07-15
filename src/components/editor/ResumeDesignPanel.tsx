@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import { AlertTriangle, Check, ImagePlus, LayoutTemplate, RotateCcw, Trash2 } from "lucide-react";
+import { AlertTriangle, Check, ImagePlus, LayoutTemplate, Minus, Plus, RotateCcw, Trash2 } from "lucide-react";
 import { palettes } from "../../data/palettes";
 import { resumeTemplates } from "../../data/resumeTemplates";
 import type { TranslationKey, Translator } from "../../data/translations";
@@ -23,6 +23,13 @@ export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, 
   const update = (patch: Partial<ResumeSettings>) => setResume((current) => ({ ...current, settings: { ...current.settings, ...patch } }));
   const contrast = contrastRatio(settings.accentColor);
   const safeContrast = hasSafeAccentContrast(settings.accentColor);
+  const fontSizeSteps: ResumeSettings["fontSize"][] = ["small", "medium", "large"];
+  const fontSizeIndex = fontSizeSteps.indexOf(settings.fontSize);
+  const fontSizePercent = { small: 92, medium: 100, large: 108 }[settings.fontSize];
+  const changeFontSize = (direction: -1 | 1) => {
+    const nextIndex = Math.max(0, Math.min(fontSizeSteps.length - 1, fontSizeIndex + direction));
+    update({ fontSize: fontSizeSteps[nextIndex] });
+  };
 
   const content = <div className="design-panel-content">
     <div className="design-group">
@@ -32,7 +39,7 @@ export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, 
         <span className="template-card-copy"><strong>{t(template.name)}</strong><small>{t(template.description)}</small><span>{t(template.ats)} · {template.photo ? t("photoAllowed") : t("noPhoto")}</span></span>
         {settings.template === template.id && <span className="template-selected"><Check size={14} /></span>}
       </button>)}</div>
-      {settings.template === "two-column" && <p className="design-warning"><AlertTriangle size={15} />{t("twoColumnWarning")}</p>}
+      {["two-column", "studio"].includes(settings.template) && <p className="design-warning"><AlertTriangle size={15} />{t("twoColumnWarning")}</p>}
     </div>
 
     <div className="design-group">
@@ -48,7 +55,11 @@ export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, 
 
     <div className="design-group design-options-grid">
       <label className="field"><span>{t("fontFamily")}</span><select value={settings.fontFamily} onChange={(event) => update({ fontFamily: event.target.value as ResumeSettings["fontFamily"] })}><option value="inter">Inter</option><option value="arial">Arial</option><option value="helvetica">Helvetica</option><option value="source-sans">Source Sans 3</option><option value="georgia">Georgia</option><option value="merriweather">Merriweather</option></select></label>
-      <label className="field"><span>{t("fontSize")}</span><select value={settings.fontSize} onChange={(event) => update({ fontSize: event.target.value as ResumeSettings["fontSize"] })}><option value="small">{t("small")}</option><option value="medium">{t("medium")}</option><option value="large">{t("large")}</option></select></label>
+      <div className="field font-size-field"><span>{t("fontSize")}</span><div className="font-size-stepper">
+        <button type="button" onClick={() => changeFontSize(-1)} disabled={fontSizeIndex === 0} aria-label={t("decreaseFontSize")} title={t("decreaseFontSize")}><Minus size={16} /></button>
+        <output aria-live="polite"><strong>{fontSizePercent}%</strong><small>{t(settings.fontSize)}</small></output>
+        <button type="button" onClick={() => changeFontSize(1)} disabled={fontSizeIndex === fontSizeSteps.length - 1} aria-label={t("increaseFontSize")} title={t("increaseFontSize")}><Plus size={16} /></button>
+      </div><small className="field-help">{t("fontSizeLimitHelp")}</small></div>
       <label className="field"><span>{t("density")}</span><select value={settings.density} onChange={(event) => update({ density: event.target.value as ResumeSettings["density"] })}><option value="compact">{t("compact")}</option><option value="normal">{t("normal")}</option><option value="spacious">{t("spacious")}</option></select></label>
       <label className="field"><span>{t("margins")}</span><select value={settings.margins} onChange={(event) => update({ margins: event.target.value as ResumeSettings["margins"] })}><option value="narrow">{t("narrow")}</option><option value="normal">{t("normal")}</option><option value="wide">{t("wide")}</option></select></label>
       <label className="field"><span>{t("dividerStyle")}</span><select value={settings.dividerStyle} onChange={(event) => update({ dividerStyle: event.target.value as ResumeSettings["dividerStyle"] })}><option value="solid">{t("solidLine")}</option><option value="thin">{t("thinLine")}</option><option value="none">{t("noLine")}</option></select></label>
@@ -66,6 +77,7 @@ export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, 
           {photoUrl && <button type="button" className="photo-delete-button" onClick={() => void removePhoto()}><Trash2 size={15} />{t("removePhoto")}</button>}
           <label className="check-field"><input type="checkbox" checked={settings.showPhoto} disabled={!photoUrl} onChange={(event) => update({ showPhoto: event.target.checked })} /><span>{t("showPhoto")}</span></label>
           <label className="field"><span>{t("photoShape")}</span><select value={settings.photoShape} onChange={(event) => update({ photoShape: event.target.value as ResumeSettings["photoShape"] })}><option value="circle">{t("circle")}</option><option value="rectangle">{t("rectangle")}</option></select></label>
+          <label className="field"><span>{t("photoDisplaySize")}</span><select value={settings.photoSize} onChange={(event) => update({ photoSize: event.target.value as ResumeSettings["photoSize"] })}><option value="small">{t("small")}</option><option value="medium">{t("medium")}</option><option value="large">{t("large")}</option></select><small className="field-help">{t("photoSizeHelp")}</small></label>
         </div>
       </div>
       {photoUrl && <div className="photo-sliders">

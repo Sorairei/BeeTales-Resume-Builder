@@ -1,6 +1,12 @@
 import type { AppLanguage } from "../types/resume";
 
 const en = {
+  photoDisplaySize: "Photo size", photoSizeHelp: "Changes the portrait area without altering image quality.",
+  decreaseFontSize: "Decrease font size", increaseFontSize: "Increase font size", fontSizeLimitHelp: "Safe range: 92% to 108%.",
+  swissGridTemplate: "Swiss Grid", swissGridTemplateDescription: "Precise editorial grid with confident typographic hierarchy.",
+  techCompactTemplate: "Tech Compact", techCompactTemplateDescription: "Dense, structured layout for technical and product careers.",
+  timelineTemplate: "Contemporary Timeline", timelineTemplateDescription: "A polished chronological narrative with subtle visual markers.",
+  studioTemplate: "Studio", studioTemplateDescription: "Expressive portfolio layout with a refined right-hand profile panel.",
   privateByDesign: "Private by design",
   browserOnly: "100% in your browser",
   savedLocally: "Saved locally",
@@ -133,6 +139,12 @@ export type TranslationKey = keyof typeof en;
 export type Translator = (key: TranslationKey) => string;
 
 const es: Record<TranslationKey, string> = {
+  photoDisplaySize: "Tamaño de la fotografía", photoSizeHelp: "Cambia el área del retrato sin alterar la calidad de la imagen.",
+  decreaseFontSize: "Reducir el tamaño de letra", increaseFontSize: "Aumentar el tamaño de letra", fontSizeLimitHelp: "Rango seguro: de 92 % a 108 %.",
+  swissGridTemplate: "Retícula Suiza", swissGridTemplateDescription: "Retícula editorial precisa con una jerarquía tipográfica segura.",
+  techCompactTemplate: "Tecnológica Compacta", techCompactTemplateDescription: "Diseño denso y estructurado para carreras técnicas y de producto.",
+  timelineTemplate: "Cronología Contemporánea", timelineTemplateDescription: "Narrativa cronológica elegante con indicadores visuales discretos.",
+  studioTemplate: "Estudio", studioTemplateDescription: "Diseño expresivo para portafolios con un panel de perfil refinado a la derecha.",
   privateByDesign: "Privado por diseño", browserOnly: "100% en tu navegador", savedLocally: "Guardado localmente", saving: "Guardando…", saveError: "Error al guardar",
   useExample: "Usar datos de ejemplo", useExampleShort: "Usar ejemplo", useExampleConfirm: "¿Reemplazar los datos actuales con el currículum de ejemplo?", emptyResume: "Restablecer currículum", emptyResumeShort: "Restablecer", emptyResumeConfirm: "¿Restablecer el currículum? Se borrarán todo el texto, la fotografía y los ajustes de diseño.",
   privacyLead: "Tu información permanece en tu dispositivo.", privacyBody: "BeeTales Resume Builder no envía, almacena ni procesa tus datos personales en servidores externos.", soraAlt: "Sora, la mascota de BeeTales", appSections: "Secciones de la aplicación", edit: "Editar", preview: "Vista previa", editorAria: "Editor del currículum",
@@ -159,6 +171,12 @@ const es: Record<TranslationKey, string> = {
 };
 
 const pl: Record<TranslationKey, string> = {
+  photoDisplaySize: "Rozmiar zdjęcia", photoSizeHelp: "Zmienia obszar portretu bez wpływu na jakość obrazu.",
+  decreaseFontSize: "Zmniejsz rozmiar tekstu", increaseFontSize: "Zwiększ rozmiar tekstu", fontSizeLimitHelp: "Bezpieczny zakres: od 92% do 108%.",
+  swissGridTemplate: "Siatka Szwajcarska", swissGridTemplateDescription: "Precyzyjna siatka redakcyjna z wyrazistą hierarchią typograficzną.",
+  techCompactTemplate: "Techniczny Kompakt", techCompactTemplateDescription: "Zwarty, uporządkowany układ dla kariery technicznej i produktowej.",
+  timelineTemplate: "Współczesna Oś Czasu", timelineTemplateDescription: "Elegancka chronologia z subtelnymi znacznikami wizualnymi.",
+  studioTemplate: "Studio", studioTemplateDescription: "Wyrazisty układ portfolio z eleganckim panelem profilu po prawej.",
   privateByDesign: "Prywatność w standardzie", browserOnly: "100% w Twojej przeglądarce", savedLocally: "Zapisano lokalnie", saving: "Zapisywanie…", saveError: "Błąd zapisu",
   useExample: "Użyj danych przykładowych", useExampleShort: "Użyj przykładu", useExampleConfirm: "Zastąpić obecne dane przykładowym CV?", emptyResume: "Wyczyść CV", emptyResumeShort: "Wyczyść", emptyResumeConfirm: "Wyczyścić CV? Cały tekst, zdjęcie i ustawienia wyglądu zostaną usunięte.",
   privacyLead: "Twoje dane pozostają na Twoim urządzeniu.", privacyBody: "BeeTales Resume Builder nie wysyła, nie przechowuje ani nie przetwarza Twoich danych osobowych na zewnętrznych serwerach.", soraAlt: "Sora, maskotka BeeTales", appSections: "Sekcje aplikacji", edit: "Edytuj", preview: "Podgląd", editorAria: "Edytor CV",
@@ -185,6 +203,12 @@ const pl: Record<TranslationKey, string> = {
 };
 
 const pt: Record<TranslationKey, string> = {
+  photoDisplaySize: "Tamanho da foto", photoSizeHelp: "Altera a área do retrato sem afetar a qualidade da imagem.",
+  decreaseFontSize: "Diminuir o tamanho da fonte", increaseFontSize: "Aumentar o tamanho da fonte", fontSizeLimitHelp: "Faixa segura: de 92% a 108%.",
+  swissGridTemplate: "Grade Suíça", swissGridTemplateDescription: "Grade editorial precisa com hierarquia tipográfica marcante.",
+  techCompactTemplate: "Tecnológico Compacto", techCompactTemplateDescription: "Layout denso e estruturado para carreiras técnicas e de produto.",
+  timelineTemplate: "Linha do Tempo Contemporânea", timelineTemplateDescription: "Narrativa cronológica elegante com marcadores visuais discretos.",
+  studioTemplate: "Estúdio", studioTemplateDescription: "Layout expressivo para portfólio com painel de perfil refinado à direita.",
   privateByDesign: "Privacidade desde a concepção", browserOnly: "100% no seu navegador", savedLocally: "Salvo localmente", saving: "Salvando…", saveError: "Erro ao salvar",
   useExample: "Usar dados de exemplo", useExampleShort: "Usar exemplo", useExampleConfirm: "Substituir os dados atuais pelo currículo de exemplo?", emptyResume: "Limpar currículo", emptyResumeShort: "Limpar", emptyResumeConfirm: "Limpar o currículo? Todo o texto, a foto e as configurações de design serão removidos.",
   privacyLead: "Suas informações permanecem no seu dispositivo.", privacyBody: "O BeeTales Resume Builder não envia, armazena nem processa seus dados pessoais em servidores externos.", soraAlt: "Sora, mascote da BeeTales", appSections: "Seções do aplicativo", edit: "Editar", preview: "Visualização", editorAria: "Editor de currículo",

@@ -2,7 +2,7 @@
 
 BeeTales Resume Builder is a free, open-source web application for creating professional resumes without accounts, payments, watermarks, or uploading personal information to servers.
 
-This branch contains **Stages 1 through 6** and the production-ready **v1.0.0** release: a complete resume editor with four templates, validated backups, local ATS guidance, measured multi-page preview, browser-native PDF output, offline support, and a fully audited responsive interface.
+This branch contains **Stages 1 through 6** and the production-ready **v1.0.0** release: a complete resume editor with eight templates, validated backups, local ATS guidance, measured multi-page preview, browser-native PDF output, offline support, and a fully audited responsive interface.
 
 ## Privacy
 
@@ -21,7 +21,7 @@ Clearing browser storage also removes the saved resume. Export a JSON backup bef
 - Drag-and-drop section ordering with mouse, touch, and keyboard support.
 - Accessible up/down ordering controls for individual entries.
 - Reference details or an “available upon request” display mode.
-- Four real-time templates: ATS Classic, Modern, Executive, and Two-column.
+- Eight real-time templates: ATS Classic, Modern, Executive, Two-column, Swiss Grid, Tech Compact, Contemporary Timeline, and Studio.
 - Professional color palettes, custom accent color, and contrast guidance.
 - Font, size, density, margins, divider, and A4/Letter controls.
 - Optional profile photo with crop positioning and zoom, stored in IndexedDB.

@@ -6,6 +6,12 @@ export const TWO_COLUMN_SIDEBAR_SECTIONS = new Set([
   "references",
 ]);
 
+export const SIDEBAR_TEMPLATES = new Set(["two-column", "studio"]);
+
+export function usesSidebarLayout(template: string): boolean {
+  return SIDEBAR_TEMPLATES.has(template);
+}
+
 export function splitTwoColumnSections(sectionOrder: string[]) {
   return sectionOrder.reduce<{ sidebar: string[]; main: string[] }>(
     (columns, sectionId) => {

@@ -251,6 +251,34 @@ a:focus-visible {
   box-shadow: 0 0 0 3px rgba(45, 116, 74, .1);
 }
 
+.font-size-field { align-content: start; }
+.font-size-stepper {
+  min-height: 42px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  overflow: hidden;
+  border: 1px solid #cbd6cd;
+  border-radius: 5px;
+  background: #fff;
+}
+.font-size-stepper button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: #f2f6f1;
+  color: #2d6846;
+  cursor: pointer;
+}
+.font-size-stepper button:first-child { border-right: 1px solid #d7dfd8; }
+.font-size-stepper button:last-child { border-left: 1px solid #d7dfd8; }
+.font-size-stepper button:hover:not(:disabled) { background: #e5eee4; color: #194f32; }
+.font-size-stepper button:focus-visible { position: relative; z-index: 1; outline: 2px solid #2d744a; outline-offset: -2px; }
+.font-size-stepper button:disabled { color: #a8b2ab; cursor: not-allowed; }
+.font-size-stepper output { display: flex; align-items: baseline; justify-content: center; gap: 7px; color: #173126; }
+.font-size-stepper output strong { font-size: .76rem; }
+.font-size-stepper output small { color: #718078; font-size: .61rem; }
+.field-help { margin-top: 5px; color: #7b8980; font-size: .58rem; line-height: 1.35; }
+
 .field-meta { color: #7b8980; }
 .field-error { color: #994239; }
 

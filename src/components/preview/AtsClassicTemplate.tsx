@@ -2,7 +2,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { getTranslator } from "../../data/translations";
 import type { ResumeData } from "../../types/resume";
 import { formatDate } from "../../utils/dates";
-import { splitTwoColumnSections } from "../../utils/templateLayout";
+import { splitTwoColumnSections, usesSidebarLayout } from "../../utils/templateLayout";
 
 interface Props { resume: ResumeData; photoUrl?: string; }
 
@@ -64,10 +64,11 @@ export function AtsClassicTemplate({ resume, photoUrl }: Props) {
     return content ? <div className={`ordered-section section-${id}`} key={id}>{content}</div> : null;
   };
   const twoColumnSections = splitTwoColumnSections(resume.sectionOrder);
+  const sidebarLayout = usesSidebarLayout(resume.settings.template);
 
   return (
     <article
-      className={`resume-page resume-template template-${resume.settings.template} font-${resume.settings.fontFamily} size-${resume.settings.fontSize} density-${resume.settings.density} margins-${resume.settings.margins} divider-${resume.settings.dividerStyle} page-${resume.settings.pageSize}`}
+      className={`resume-page resume-template template-${resume.settings.template} font-${resume.settings.fontFamily} size-${resume.settings.fontSize} photo-size-${resume.settings.photoSize} density-${resume.settings.density} margins-${resume.settings.margins} divider-${resume.settings.dividerStyle} page-${resume.settings.pageSize}`}
       style={{ "--resume-accent": resume.settings.accentColor } as React.CSSProperties}
       aria-label={t("resumePreviewAria")}
     >
@@ -85,8 +86,8 @@ export function AtsClassicTemplate({ resume, photoUrl }: Props) {
         </div>
       </header>
 
-      {resume.settings.template === "two-column" ? (
-        <div className="resume-sections two-column-sections">
+      {sidebarLayout ? (
+        <div className="resume-sections sidebar-sections two-column-sections">
           <div className="resume-sidebar">{twoColumnSections.sidebar.map(renderOrderedSection)}</div>
           <div className="resume-main">{twoColumnSections.main.map(renderOrderedSection)}</div>
         </div>

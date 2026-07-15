@@ -4,6 +4,7 @@ import App from "./App";
 import { registerPwa } from "./services/pwaService";
 import "./styles/global.css";
 import "./styles/refined.css";
+import "./styles/templates.css";
 import "./styles/print.css";
 
 createRoot(document.getElementById("root")!).render(<StrictMode><App /></StrictMode>);
