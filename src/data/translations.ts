@@ -1,6 +1,11 @@
 import type { AppLanguage } from "../types/resume";
 
 const en = {
+  textMode: "Text mode", textModeHelp: "Edit and automate the resume using structured text.", textModeBadge: "YAML / Markdown",
+  textSyncTitle: "Two-way local synchronization.", textSyncHelp: "Valid YAML changes are applied automatically to the visual editor after a short pause.", textMarkdownHelp: "Edit the YAML front matter. The readable Markdown section is regenerated after synchronization.",
+  textFormat: "Text format", yamlFormat: "YAML — automation", markdownFormat: "Markdown — readable", textEditorLabel: "Structured resume text editor",
+  textApply: "Apply changes", textRefresh: "Reload visual data", textCopy: "Copy", textDownload: "Download", textImport: "Import file",
+  textSynced: "Synchronized", textPending: "Waiting for valid changes…", textInvalid: "The text is not valid or is incomplete.", textCopied: "Copied to clipboard", textDownloaded: "Text file downloaded", textImported: "Text file imported", textFileTooLarge: "The text file exceeds 2 MB.", textImportConfirm: "Import this text file and replace the current resume data? The local photo will be preserved.",
   photoDisplaySize: "Photo size", photoSizeHelp: "Changes the portrait area without altering image quality.",
   decreaseFontSize: "Decrease font size", increaseFontSize: "Increase font size", fontSizeLimitHelp: "Safe range: 92% to 108%.",
   swissGridTemplate: "Swiss Grid", swissGridTemplateDescription: "Precise editorial grid with confident typographic hierarchy.",
@@ -139,6 +144,11 @@ export type TranslationKey = keyof typeof en;
 export type Translator = (key: TranslationKey) => string;
 
 const es: Record<TranslationKey, string> = {
+  textMode: "Modo texto", textModeHelp: "Edita y automatiza el currículum mediante texto estructurado.", textModeBadge: "YAML / Markdown",
+  textSyncTitle: "Sincronización local bidireccional.", textSyncHelp: "Los cambios YAML válidos se aplican automáticamente al editor visual después de una breve pausa.", textMarkdownHelp: "Edita el encabezado YAML. La sección Markdown legible se regenera después de sincronizar.",
+  textFormat: "Formato de texto", yamlFormat: "YAML — automatización", markdownFormat: "Markdown — legible", textEditorLabel: "Editor de texto estructurado del currículum",
+  textApply: "Aplicar cambios", textRefresh: "Recargar datos visuales", textCopy: "Copiar", textDownload: "Descargar", textImport: "Importar archivo",
+  textSynced: "Sincronizado", textPending: "Esperando cambios válidos…", textInvalid: "El texto no es válido o está incompleto.", textCopied: "Copiado al portapapeles", textDownloaded: "Archivo de texto descargado", textImported: "Archivo de texto importado", textFileTooLarge: "El archivo de texto supera los 2 MB.", textImportConfirm: "¿Importar este archivo de texto y reemplazar los datos actuales? La fotografía local se conservará.",
   photoDisplaySize: "Tamaño de la fotografía", photoSizeHelp: "Cambia el área del retrato sin alterar la calidad de la imagen.",
   decreaseFontSize: "Reducir el tamaño de letra", increaseFontSize: "Aumentar el tamaño de letra", fontSizeLimitHelp: "Rango seguro: de 92 % a 108 %.",
   swissGridTemplate: "Retícula Suiza", swissGridTemplateDescription: "Retícula editorial precisa con una jerarquía tipográfica segura.",
@@ -171,6 +181,11 @@ const es: Record<TranslationKey, string> = {
 };
 
 const pl: Record<TranslationKey, string> = {
+  textMode: "Tryb tekstowy", textModeHelp: "Edytuj i automatyzuj CV za pomocą tekstu strukturalnego.", textModeBadge: "YAML / Markdown",
+  textSyncTitle: "Lokalna synchronizacja dwukierunkowa.", textSyncHelp: "Prawidłowe zmiany YAML są automatycznie stosowane w edytorze wizualnym po krótkiej przerwie.", textMarkdownHelp: "Edytuj nagłówek YAML. Czytelna sekcja Markdown jest generowana ponownie po synchronizacji.",
+  textFormat: "Format tekstu", yamlFormat: "YAML — automatyzacja", markdownFormat: "Markdown — czytelny", textEditorLabel: "Edytor strukturalnego tekstu CV",
+  textApply: "Zastosuj zmiany", textRefresh: "Wczytaj dane wizualne", textCopy: "Kopiuj", textDownload: "Pobierz", textImport: "Importuj plik",
+  textSynced: "Zsynchronizowano", textPending: "Oczekiwanie na prawidłowe zmiany…", textInvalid: "Tekst jest nieprawidłowy lub niekompletny.", textCopied: "Skopiowano do schowka", textDownloaded: "Pobrano plik tekstowy", textImported: "Zaimportowano plik tekstowy", textFileTooLarge: "Plik tekstowy przekracza 2 MB.", textImportConfirm: "Zaimportować ten plik tekstowy i zastąpić bieżące dane CV? Lokalne zdjęcie zostanie zachowane.",
   photoDisplaySize: "Rozmiar zdjęcia", photoSizeHelp: "Zmienia obszar portretu bez wpływu na jakość obrazu.",
   decreaseFontSize: "Zmniejsz rozmiar tekstu", increaseFontSize: "Zwiększ rozmiar tekstu", fontSizeLimitHelp: "Bezpieczny zakres: od 92% do 108%.",
   swissGridTemplate: "Siatka Szwajcarska", swissGridTemplateDescription: "Precyzyjna siatka redakcyjna z wyrazistą hierarchią typograficzną.",
@@ -203,6 +218,11 @@ const pl: Record<TranslationKey, string> = {
 };
 
 const pt: Record<TranslationKey, string> = {
+  textMode: "Modo de texto", textModeHelp: "Edite e automatize o currículo usando texto estruturado.", textModeBadge: "YAML / Markdown",
+  textSyncTitle: "Sincronização local bidirecional.", textSyncHelp: "Alterações YAML válidas são aplicadas automaticamente ao editor visual após uma breve pausa.", textMarkdownHelp: "Edite o cabeçalho YAML. A seção Markdown legível é regenerada após a sincronização.",
+  textFormat: "Formato de texto", yamlFormat: "YAML — automação", markdownFormat: "Markdown — legível", textEditorLabel: "Editor de texto estruturado do currículo",
+  textApply: "Aplicar alterações", textRefresh: "Recarregar dados visuais", textCopy: "Copiar", textDownload: "Baixar", textImport: "Importar arquivo",
+  textSynced: "Sincronizado", textPending: "Aguardando alterações válidas…", textInvalid: "O texto não é válido ou está incompleto.", textCopied: "Copiado para a área de transferência", textDownloaded: "Arquivo de texto baixado", textImported: "Arquivo de texto importado", textFileTooLarge: "O arquivo de texto excede 2 MB.", textImportConfirm: "Importar este arquivo de texto e substituir os dados atuais? A foto local será preservada.",
   photoDisplaySize: "Tamanho da foto", photoSizeHelp: "Altera a área do retrato sem afetar a qualidade da imagem.",
   decreaseFontSize: "Diminuir o tamanho da fonte", increaseFontSize: "Aumentar o tamanho da fonte", fontSizeLimitHelp: "Faixa segura: de 92% a 108%.",
   swissGridTemplate: "Grade Suíça", swissGridTemplateDescription: "Grade editorial precisa com hierarquia tipográfica marcante.",

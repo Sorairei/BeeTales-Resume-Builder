@@ -26,6 +26,8 @@ Clearing browser storage also removes the saved resume. Export a JSON backup bef
 - Font, size, density, margins, divider, and A4/Letter controls.
 - Optional profile photo with crop positioning and zoom, stored in IndexedDB.
 - Validated JSON import and export, including an optional compressed photo.
+- Local YAML and Markdown text mode with automatic two-way synchronization, import, export, and copy controls.
+- Automation-friendly text files that preserve the local IndexedDB photo without embedding it.
 - Version-aware migrations for older BeeTales resume files.
 - Clear validation for email addresses, phone numbers, and web links.
 - Permanent deletion of all locally stored resume data.
@@ -109,6 +111,12 @@ The score is only a writing and layout aid. It does not predict or guarantee acc
 Open **Data and backups** in the editor to export a portable `.json` file. Import validates its format, limits its size, checks the data version, and asks before replacing the current resume. The file is created and read entirely in the browser; it is never uploaded to BeeTales or another service.
 
 Backups may include the compressed profile photo. Treat the downloaded file as personal information and store it securely.
+
+## YAML and Markdown text mode
+
+Open **Text mode** to edit the complete resume as YAML or as Markdown with YAML front matter. Valid changes synchronize automatically with the visual editor after a short pause; invalid or incomplete text is reported without replacing the current resume.
+
+YAML is the authoritative automation format. Markdown keeps the same structured data in its front matter and adds a readable resume below it. Imported and exported text files never embed the profile photo; the existing local IndexedDB photo is preserved when text changes are applied.
 
 ## Release status
 

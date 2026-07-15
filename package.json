@@ -17,6 +17,7 @@
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "yaml": "^2.8.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
