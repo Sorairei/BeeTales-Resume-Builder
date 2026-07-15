@@ -1,11 +1,12 @@
 const CACHE_PREFIX = "beetales-resume-builder";
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 const scopeUrl = new URL(self.registration.scope);
 const appShell = [
   scopeUrl.href,
   new URL("index.html", scopeUrl).href,
-  new URL("favicon.svg", scopeUrl).href,
+  new URL("favicon.png", scopeUrl).href,
+  new URL("favicon.ico", scopeUrl).href,
   new URL("manifest.webmanifest", scopeUrl).href,
   new URL("assets/beetales-logo-v2.png", scopeUrl).href,
   new URL("assets/sora-avatar.png", scopeUrl).href,

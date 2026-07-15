@@ -10,15 +10,9 @@
   "theme_color": "#050b07",
   "icons": [
     {
-      "src": "./assets/sora-avatar.png",
+      "src": "./favicon.png",
       "sizes": "1254x1254",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ]

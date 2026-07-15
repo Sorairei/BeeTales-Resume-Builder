@@ -54,7 +54,7 @@ export function DataActionsPanel({ exportBackup, importBackup, deleteAllData, t 
       <button type="button" onClick={() => void runExport()} disabled={busy}><Download size={17} /><span><strong>{t("exportJson")}</strong><small>{t("exportJsonHelp")}</small></span></button>
       <label className={busy ? "disabled" : ""}><Upload size={17} /><span><strong>{t("importJson")}</strong><small>{t("importJsonHelp")}</small></span><input type="file" accept="application/json,.json" disabled={busy} onChange={(event) => { const file = event.target.files?.[0]; if (file) void runImport(file); event.target.value = ""; }} /></label>
     </div>
-    <button type="button" className="delete-all-data" disabled={busy} onClick={() => void runDelete()}><Trash2 size={16} />{t("deleteAllData")}</button>
+    <button type="button" className="delete-all-data" disabled={busy} title={t("deleteAllConfirm")} aria-label={t("deleteAllData")} onClick={() => void runDelete()}><Trash2 size={16} />{t("deleteAllData")}</button>
     {message && <p className={`data-action-message ${["backupExported", "backupImported", "allDataDeleted"].includes(message) ? "success" : "error"}`} role="status">{t(message as TranslationKey)}</p>}
   </Accordion>;
 }

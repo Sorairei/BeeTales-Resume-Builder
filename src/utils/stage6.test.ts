@@ -6,6 +6,7 @@ import { translations } from "../data/translations";
 import { moveItem } from "./arrays";
 import { migrateResumeData } from "./migrations";
 import { normalizeHiddenSections, normalizeSectionOrder } from "./sectionOrder";
+import { splitTwoColumnSections } from "./templateLayout";
 
 describe("Stage 6 interface and ordering safeguards", () => {
   it("exposes four distinct template choices", () => {
@@ -48,5 +49,11 @@ describe("Stage 6 interface and ordering safeguards", () => {
     const original = ["one", "two", "three"];
     expect(moveItem(original, 2, -1)).toEqual(["one", "three", "two"]);
     expect(original).toEqual(["one", "two", "three"]);
+  });
+
+  it("places two-column sidebar and main sections in independent ordered columns", () => {
+    const columns = splitTwoColumnSections(["summary", "experience", "skills", "education", "languages", "projects"]);
+    expect(columns.sidebar).toEqual(["skills", "languages"]);
+    expect(columns.main).toEqual(["summary", "experience", "education", "projects"]);
   });
 });
