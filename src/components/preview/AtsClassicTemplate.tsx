@@ -3,7 +3,7 @@ import { getTranslator } from "../../data/translations";
 import type { ResumeData } from "../../types/resume";
 import { formatDate } from "../../utils/dates";
 
-interface Props { resume: ResumeData; }
+interface Props { resume: ResumeData; photoUrl?: string; }
 
 function cleanUrl(value: string): string { return value.replace(/^https?:\/\//, "").replace(/\/$/, ""); }
 function linkHref(value: string): string { return /^https?:\/\//.test(value) ? value : `https://${value}`; }
@@ -15,7 +15,7 @@ function groupedSkills(skills: ResumeData["skills"], defaultCategory: string): R
   }, {});
 }
 
-export function AtsClassicTemplate({ resume }: Props) {
+export function AtsClassicTemplate({ resume, photoUrl }: Props) {
   const { personal } = resume;
   const t = getTranslator(resume.language);
   const location = [personal.city, personal.region, personal.country].filter(Boolean).join(", ");
@@ -59,19 +59,26 @@ export function AtsClassicTemplate({ resume }: Props) {
   };
 
   return (
-    <article className="resume-page ats-template" aria-label={t("resumePreviewAria")}>
+    <article
+      className={`resume-page resume-template template-${resume.settings.template} font-${resume.settings.fontFamily} size-${resume.settings.fontSize} density-${resume.settings.density} margins-${resume.settings.margins} divider-${resume.settings.dividerStyle} page-${resume.settings.pageSize}`}
+      style={{ "--resume-accent": resume.settings.accentColor } as React.CSSProperties}
+      aria-label={t("resumePreviewAria")}
+    >
       <header className="resume-header">
-        <h2>{personal.fullName || t("yourName")}</h2>
-        <p className="resume-title">{personal.professionalTitle || t("professionalTitleFallback")}</p>
-        <div className="contact-row">
-          {personal.email && <a href={`mailto:${personal.email}`}><Mail size={11} />{personal.email}</a>}
-          {personal.phone && <a href={`tel:${personal.phone}`}><Phone size={11} />{personal.phone}</a>}
-          {location && <span><MapPin size={11} />{location}</span>}
+        {resume.settings.showPhoto && resume.settings.template !== "ats-classic" && photoUrl && <div className={`resume-photo shape-${resume.settings.photoShape}`}><img src={photoUrl} alt="" style={{ objectPosition: `${resume.settings.photoPositionX}% ${resume.settings.photoPositionY}%`, transform: `scale(${resume.settings.photoZoom})` }} /></div>}
+        <div className="resume-identity">
+          <h2>{personal.fullName || t("yourName")}</h2>
+          <p className="resume-title">{personal.professionalTitle || t("professionalTitleFallback")}</p>
+          <div className="contact-row">
+            {personal.email && <a href={`mailto:${personal.email}`}><Mail size={11} />{personal.email}</a>}
+            {personal.phone && <a href={`tel:${personal.phone}`}><Phone size={11} />{personal.phone}</a>}
+            {location && <span><MapPin size={11} />{location}</span>}
+          </div>
+          {links.length > 0 && <div className="link-row">{links.map((link) => <a href={linkHref(link)} key={link}>{cleanUrl(link)}</a>)}</div>}
         </div>
-        {links.length > 0 && <div className="link-row">{links.map((link) => <a href={linkHref(link)} key={link}>{cleanUrl(link)}</a>)}</div>}
       </header>
 
-      {resume.sectionOrder.map((id) => <div className="ordered-section" key={id}>{renderSection(id)}</div>)}
+      <div className="resume-sections">{resume.sectionOrder.map((id) => <div className={`ordered-section section-${id}`} key={id}>{renderSection(id)}</div>)}</div>
     </article>
   );
 }

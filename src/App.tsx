@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Eye, FileText, Languages, Leaf, RotateCcw, ShieldCheck, Sparkles } from "lucide-react";
+import { Eye, FileText, Languages, LayoutTemplate, Leaf, RotateCcw, ShieldCheck, Sparkles } from "lucide-react";
 import { BrandLogo } from "./components/common/BrandLogo";
 import { EditorPanel } from "./components/editor/EditorPanel";
+import { ResumeDesignPanel } from "./components/editor/ResumeDesignPanel";
 import { PreviewPanel } from "./components/preview/PreviewPanel";
 import { getTranslator } from "./data/translations";
 import { useResume } from "./hooks/useResume";
 import type { AppLanguage } from "./types/resume";
 
-type MobileTab = "edit" | "preview";
+type MobileTab = "edit" | "design" | "preview";
 
 export default function App() {
   const resumeState = useResume();
@@ -61,12 +62,14 @@ export default function App() {
 
       <nav className="mobile-tabs" aria-label={t("appSections")}>
         <button className={mobileTab === "edit" ? "active" : ""} onClick={() => setMobileTab("edit")}><FileText size={17} /> {t("edit")}</button>
+        <button className={mobileTab === "design" ? "active" : ""} onClick={() => setMobileTab("design")}><LayoutTemplate size={17} /> {t("design")}</button>
         <button className={mobileTab === "preview" ? "active" : ""} onClick={() => setMobileTab("preview")}><Eye size={17} /> {t("preview")}</button>
       </nav>
 
       <main className="workspace">
         <div className={`workspace-editor ${mobileTab !== "edit" ? "mobile-hidden" : ""}`}><EditorPanel {...resumeState} t={t} /></div>
-        <div className={`workspace-preview ${mobileTab !== "preview" ? "mobile-hidden" : ""}`}><PreviewPanel resume={resumeState.resume} /></div>
+        <div className={`workspace-design ${mobileTab !== "design" ? "mobile-hidden" : ""}`}><ResumeDesignPanel resume={resumeState.resume} setResume={resumeState.setResume} t={t} photoUrl={resumeState.photoUrl} photoError={resumeState.photoError} uploadPhoto={resumeState.uploadPhoto} removePhoto={resumeState.removePhoto} standalone /></div>
+        <div className={`workspace-preview ${mobileTab !== "preview" ? "mobile-hidden" : ""}`}><PreviewPanel resume={resumeState.resume} photoUrl={resumeState.photoUrl} /></div>
       </main>
     </div>
   );

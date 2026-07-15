@@ -1,7 +1,7 @@
 import type { ResumeData } from "../types/resume";
 
 export const emptyResume: ResumeData = {
-  version: 3,
+  version: 4,
   language: "en",
   settings: {
     template: "ats-classic",
@@ -12,6 +12,9 @@ export const emptyResume: ResumeData = {
     dividerStyle: "thin",
     showPhoto: false,
     photoShape: "circle",
+    photoZoom: 1,
+    photoPositionX: 50,
+    photoPositionY: 50,
     pageSize: "a4",
     margins: "normal",
   },

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { defaultResume } from "../data/defaultResume";
 import { emptyResume } from "../data/emptyResume";
 import { clearResume, loadResume, saveResume } from "../services/storageService";
+import { deletePhoto, loadPhoto, processPhoto, savePhoto } from "../services/imageService";
 import type { ExperienceItem, PersonalInformation, ResumeData, SaveStatus } from "../types/resume";
 import { createId } from "../utils/id";
 
@@ -14,6 +15,8 @@ function blankExperience(): ExperienceItem {
 export function useResume() {
   const [resume, setResumeState] = useState<ResumeData>(() => loadResume() ?? clone(defaultResume));
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("saved");
+  const [photoUrl, setPhotoUrl] = useState<string>();
+  const [photoError, setPhotoError] = useState<string>();
 
   const setResume: React.Dispatch<React.SetStateAction<ResumeData>> = (action) => {
     setSaveStatus("saving");
@@ -31,6 +34,24 @@ export function useResume() {
     }, 450);
     return () => window.clearTimeout(timer);
   }, [resume]);
+
+  useEffect(() => {
+    if (!resume.personal.photo) return;
+    let active = true;
+    let nextUrl: string | undefined;
+    void loadPhoto().then((blob) => {
+      if (!active || !blob) return;
+      nextUrl = URL.createObjectURL(blob);
+      setPhotoUrl((current) => {
+        if (current) URL.revokeObjectURL(current);
+        return nextUrl;
+      });
+    }).catch(() => setPhotoError("photo-load-error"));
+    return () => {
+      active = false;
+      if (nextUrl) URL.revokeObjectURL(nextUrl);
+    };
+  }, [resume.personal.photo]);
 
   const updatePersonal = (field: keyof PersonalInformation, value: string) => {
     setResume((current) => ({ ...current, personal: { ...current.personal, [field]: value } }));
@@ -64,7 +85,32 @@ export function useResume() {
   const removeExperience = (id: string) => setResume((current) => ({ ...current, experience: current.experience.filter((item) => item.id !== id) }));
 
   const useExample = () => setResume((current) => ({ ...clone(defaultResume), language: current.language }));
-  const createEmpty = () => { clearResume(); setResume((current) => ({ ...clone(emptyResume), language: current.language })); };
+  const createEmpty = () => {
+    clearResume();
+    void deletePhoto().catch(() => undefined);
+    setPhotoUrl((current) => { if (current) URL.revokeObjectURL(current); return undefined; });
+    setResume((current) => ({ ...clone(emptyResume), language: current.language }));
+  };
 
-  return { resume, setResume, saveStatus, updatePersonal, updateExperience, updateAchievement, addAchievement, removeAchievement, addExperience, duplicateExperience, removeExperience, useExample, createEmpty };
+  const uploadPhoto = async (file: File) => {
+    setPhotoError(undefined);
+    try {
+      const blob = await processPhoto(file);
+      await savePhoto(blob);
+      const url = URL.createObjectURL(blob);
+      setPhotoUrl((current) => { if (current) URL.revokeObjectURL(current); return url; });
+      setResume((current) => ({ ...current, personal: { ...current.personal, photo: `indexeddb:resume-photo:${Date.now()}` }, settings: { ...current.settings, showPhoto: true } }));
+    } catch (error) {
+      setPhotoError(error instanceof Error ? error.message : "image-processing-failed");
+    }
+  };
+
+  const removePhoto = async () => {
+    setPhotoError(undefined);
+    try { await deletePhoto(); } catch { setPhotoError("photo-delete-error"); }
+    setPhotoUrl((current) => { if (current) URL.revokeObjectURL(current); return undefined; });
+    setResume((current) => ({ ...current, personal: { ...current.personal, photo: "" }, settings: { ...current.settings, showPhoto: false } }));
+  };
+
+  return { resume, setResume, saveStatus, photoUrl, photoError, uploadPhoto, removePhoto, updatePersonal, updateExperience, updateAchievement, addAchievement, removeAchievement, addExperience, duplicateExperience, removeExperience, useExample, createEmpty };
 }

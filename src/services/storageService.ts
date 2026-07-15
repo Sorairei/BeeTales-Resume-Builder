@@ -10,10 +10,13 @@ export function loadResume(): ResumeData | null {
     if (!parsed || typeof parsed !== "object" || !("version" in parsed) || !("personal" in parsed)) return null;
     const resume = parsed as ResumeData;
     if (resume.version === 1) {
-      return { ...resume, version: 3, language: "en", referenceMode: "full" };
+      return { ...resume, version: 4, language: "en", referenceMode: "full", settings: { ...resume.settings, photoZoom: 1, photoPositionX: 50, photoPositionY: 50 } };
     }
     if (resume.version === 2) {
-      return { ...resume, version: 3, referenceMode: "full" };
+      return { ...resume, version: 4, referenceMode: "full", settings: { ...resume.settings, photoZoom: 1, photoPositionX: 50, photoPositionY: 50 } };
+    }
+    if (resume.version === 3) {
+      return { ...resume, version: 4, settings: { ...resume.settings, photoZoom: 1, photoPositionX: 50, photoPositionY: 50 } };
     }
     return resume;
   } catch {

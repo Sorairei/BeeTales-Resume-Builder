@@ -10,6 +10,9 @@ export interface ResumeSettings {
   dividerStyle: "solid" | "thin" | "none";
   showPhoto: boolean;
   photoShape: "circle" | "rectangle";
+  photoZoom: number;
+  photoPositionX: number;
+  photoPositionY: number;
   pageSize: "a4" | "letter";
   margins: "narrow" | "normal" | "wide";
 }
