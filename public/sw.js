@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "beetales-resume-builder";
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 const scopeUrl = new URL(self.registration.scope);
 const appShell = [
