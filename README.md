@@ -2,7 +2,7 @@
 
 BeeTales Resume Builder is a free, open-source web application for creating professional resumes without accounts, payments, watermarks, or uploading personal information to servers.
 
-This branch contains **Stage 1** of the project: a stable functional foundation with a personal-information editor, professional summary, work experience, ATS Classic preview, sample data, an empty resume option, and automatic local saving.
+This branch contains **Stages 1 and 2** of the project: a stable resume editor with all content sections, section visibility and ordering, an ATS Classic preview, sample data, an empty resume option, and automatic local saving.
 
 ## Privacy
 
@@ -15,6 +15,12 @@ Clearing browser storage also removes the saved resume. JSON backup import and e
 - Responsive personal-information editor.
 - Professional summary with counters and guidance.
 - Work experience with achievements, duplication, and deletion.
+- Education, skills, languages, certifications, projects, courses, and references.
+- Custom sections for publications, awards, volunteering, and other content.
+- Section visibility controls that preserve hidden information.
+- Drag-and-drop section ordering with mouse, touch, and keyboard support.
+- Accessible up/down ordering controls for individual entries.
+- Reference details or an “available upon request” display mode.
 - Real-time ATS Classic preview.
 - English as the default language.
 - English, Spanish, Polish, and Portuguese interfaces.
@@ -30,6 +36,7 @@ Clearing browser storage also removes the saved resume. JSON backup import and e
 - TypeScript
 - Vite
 - Lucide Icons
+- dnd-kit
 - CSS organized by visual components
 
 ## Local development
@@ -75,7 +82,7 @@ At this stage, output uses the browser's print function. Advanced PDF export and
 
 ## Next stages
 
-Future releases will add the remaining sections, reordering, additional templates, visual customization, JSON import and export, validation, ATS analysis, advanced PDF output, tests, and PWA support.
+Future releases will add additional templates, visual customization, JSON import and export, validation, ATS analysis, advanced PDF output, tests, and PWA support.
 
 ## License
 

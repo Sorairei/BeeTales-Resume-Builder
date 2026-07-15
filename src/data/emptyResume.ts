@@ -1,7 +1,7 @@
 import type { ResumeData } from "../types/resume";
 
 export const emptyResume: ResumeData = {
-  version: 2,
+  version: 3,
   language: "en",
   settings: {
     template: "ats-classic",
@@ -20,7 +20,7 @@ export const emptyResume: ResumeData = {
     address: "", linkedin: "", github: "", website: "", portfolio: "", photo: "",
   },
   summary: "",
-  experience: [], education: [], skills: [], languages: [], certifications: [], projects: [], courses: [], references: [], customSections: [],
+  experience: [], education: [], skills: [], languages: [], certifications: [], projects: [], courses: [], references: [], referenceMode: "full", customSections: [],
   sectionOrder: ["summary", "experience", "education", "skills", "languages", "certifications", "projects", "courses", "references"],
   hiddenSections: [],
 };

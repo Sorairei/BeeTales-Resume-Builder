@@ -68,6 +68,7 @@ export interface ResumeData {
   projects: ProjectItem[];
   courses: CourseItem[];
   references: ReferenceItem[];
+  referenceMode: "full" | "on-request";
   customSections: CustomSection[];
   sectionOrder: string[];
   hiddenSections: string[];

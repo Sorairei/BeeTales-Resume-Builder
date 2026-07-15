@@ -10,7 +10,10 @@ export function loadResume(): ResumeData | null {
     if (!parsed || typeof parsed !== "object" || !("version" in parsed) || !("personal" in parsed)) return null;
     const resume = parsed as ResumeData;
     if (resume.version === 1) {
-      return { ...resume, version: 2, language: "en" };
+      return { ...resume, version: 3, language: "en", referenceMode: "full" };
+    }
+    if (resume.version === 2) {
+      return { ...resume, version: 3, referenceMode: "full" };
     }
     return resume;
   } catch {
