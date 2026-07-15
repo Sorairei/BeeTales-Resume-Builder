@@ -5,3 +5,7 @@ function safeName(value: string): string {
 export function resumeBackupFileName(fullName: string, date = new Date()): string {
   return `beetales-resume-${safeName(fullName)}-${date.toISOString().slice(0, 10)}.json`;
 }
+
+export function resumePdfFileName(fullName: string): string {
+  return `resume-${safeName(fullName)}.pdf`;
+}

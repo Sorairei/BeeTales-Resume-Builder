@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Eye, FileText, Languages, LayoutTemplate, Leaf, RotateCcw, ShieldCheck, Sparkles } from "lucide-react";
+import { Eye, FileText, Languages, LayoutTemplate, Leaf, RotateCcw, SearchCheck, ShieldCheck, Sparkles } from "lucide-react";
+import { AtsReviewPanel } from "./components/ats/AtsReviewPanel";
 import { BrandLogo } from "./components/common/BrandLogo";
 import { EditorPanel } from "./components/editor/EditorPanel";
 import { ResumeDesignPanel } from "./components/editor/ResumeDesignPanel";
@@ -8,11 +9,12 @@ import { getTranslator } from "./data/translations";
 import { useResume } from "./hooks/useResume";
 import type { AppLanguage } from "./types/resume";
 
-type MobileTab = "edit" | "design" | "preview";
+type MobileTab = "edit" | "design" | "review" | "preview";
 
 export default function App() {
   const resumeState = useResume();
   const [mobileTab, setMobileTab] = useState<MobileTab>("edit");
+  const [pageCount, setPageCount] = useState(1);
   const t = getTranslator(resumeState.resume.language);
 
   useEffect(() => {
@@ -63,13 +65,15 @@ export default function App() {
       <nav className="mobile-tabs" aria-label={t("appSections")}>
         <button className={mobileTab === "edit" ? "active" : ""} onClick={() => setMobileTab("edit")}><FileText size={17} /> {t("edit")}</button>
         <button className={mobileTab === "design" ? "active" : ""} onClick={() => setMobileTab("design")}><LayoutTemplate size={17} /> {t("design")}</button>
+        <button className={mobileTab === "review" ? "active" : ""} onClick={() => setMobileTab("review")}><SearchCheck size={17} /> {t("review")}</button>
         <button className={mobileTab === "preview" ? "active" : ""} onClick={() => setMobileTab("preview")}><Eye size={17} /> {t("preview")}</button>
       </nav>
 
       <main className="workspace">
-        <div className={`workspace-editor ${mobileTab !== "edit" ? "mobile-hidden" : ""}`}><EditorPanel {...resumeState} t={t} /></div>
+        <div className={`workspace-editor ${mobileTab !== "edit" ? "mobile-hidden" : ""}`}><EditorPanel {...resumeState} pageCount={pageCount} t={t} /></div>
         <div className={`workspace-design ${mobileTab !== "design" ? "mobile-hidden" : ""}`}><ResumeDesignPanel resume={resumeState.resume} setResume={resumeState.setResume} t={t} photoUrl={resumeState.photoUrl} photoError={resumeState.photoError} uploadPhoto={resumeState.uploadPhoto} removePhoto={resumeState.removePhoto} standalone /></div>
-        <div className={`workspace-preview ${mobileTab !== "preview" ? "mobile-hidden" : ""}`}><PreviewPanel resume={resumeState.resume} photoUrl={resumeState.photoUrl} /></div>
+        <div className={`workspace-review ${mobileTab !== "review" ? "mobile-hidden" : ""}`}><AtsReviewPanel resume={resumeState.resume} pageCount={pageCount} t={t} standalone /></div>
+        <div className={`workspace-preview ${mobileTab !== "preview" ? "mobile-hidden" : ""}`}><PreviewPanel resume={resumeState.resume} photoUrl={resumeState.photoUrl} onPageCountChange={setPageCount} /></div>
       </main>
     </div>
   );

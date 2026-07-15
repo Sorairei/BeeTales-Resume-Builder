@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
 import { FileText } from "lucide-react";
+import { AtsReviewPanel } from "../ats/AtsReviewPanel";
 import type { Translator } from "../../data/translations";
 import type { ExperienceItem, PersonalInformation, ResumeData } from "../../types/resume";
 import { ExperienceForm } from "./ExperienceForm";
@@ -28,6 +29,7 @@ interface Props {
   exportBackup: () => Promise<void>;
   importBackup: (file: File) => Promise<void>;
   deleteAllData: () => Promise<void>;
+  pageCount: number;
   t: Translator;
 }
 
@@ -36,6 +38,7 @@ export function EditorPanel(props: Props) {
     <section className="editor-panel" aria-label={props.t("editorAria")}>
       <div className="panel-heading"><div className="panel-heading-icon"><FileText size={19} /></div><div><span className="eyebrow">{props.t("content")}</span><h1>{props.t("buildResume")}</h1><p>{props.t("buildResumeHelp")}</p></div></div>
       <DataActionsPanel exportBackup={props.exportBackup} importBackup={props.importBackup} deleteAllData={props.deleteAllData} t={props.t} />
+      <div className="editor-review-wrapper"><AtsReviewPanel resume={props.resume} pageCount={props.pageCount} t={props.t} /></div>
       <div className="editor-design-wrapper"><ResumeDesignPanel resume={props.resume} setResume={props.setResume} t={props.t} photoUrl={props.photoUrl} photoError={props.photoError} uploadPhoto={props.uploadPhoto} removePhoto={props.removePhoto} /></div>
       <SectionManager resume={props.resume} setResume={props.setResume} t={props.t} />
       <PersonalForm personal={props.resume.personal} onChange={props.updatePersonal} t={props.t} />

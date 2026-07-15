@@ -2,7 +2,7 @@
 
 BeeTales Resume Builder is a free, open-source web application for creating professional resumes without accounts, payments, watermarks, or uploading personal information to servers.
 
-This branch contains **Stages 1 through 4** of the project: a stable resume editor with complete sections, four professional templates, local photo storage, validated portable JSON backups, field validation, data migrations, sample data, and automatic local saving.
+This branch contains **Stages 1 through 5** of the project: a complete resume editor with four templates, validated backups, local ATS guidance, measured multi-page preview, and browser-native PDF output that preserves real text.
 
 ## Privacy
 
@@ -29,6 +29,10 @@ Clearing browser storage also removes the saved resume. Export a JSON backup bef
 - Version-aware migrations for older BeeTales resume files.
 - Clear validation for email addresses, phone numbers, and web links.
 - Permanent deletion of all locally stored resume data.
+- Local ATS-oriented review with transparent recommendations and deductions.
+- Measured page count with visible page-break guides and overflow warnings.
+- Fit-to-width, 100%, zoom-in, and zoom-out preview controls.
+- Browser-native PDF saving and printing with selectable text and links.
 - English as the default language.
 - English, Spanish, Polish, and Portuguese interfaces.
 - Professional sample resume for first-time visitors.
@@ -86,7 +90,15 @@ src/
 
 ATS Classic uses a single column, linear reading order, real selectable text, and intentionally hides photos. The other templates retain real text but use more visual layouts, so their ATS compatibility may vary. No template can guarantee acceptance by an automated system or recruiter.
 
-At this stage, output uses the browser's print function. Advanced PDF export and visual multi-page management will be implemented later.
+**Save PDF** and **Print** use the browser's native print dialog. Choose **Save as PDF** as the destination to preserve selectable text, searchable content, and working links. Browser print engines may produce small layout differences, so review the print preview before saving.
+
+The preview measures the rendered document, displays page boundaries, and warns when the last page is very full or the resume exceeds two pages. Print styles avoid splitting headings and compact entries where the browser supports those rules.
+
+## ATS review
+
+The review runs entirely in the browser. It checks contact details, summary length, experience completeness, achievements, education, skills, link formats, page count, hidden essential sections, contrast, photos, and two-column usage. Every deduction is shown beside the related observation.
+
+The score is only a writing and layout aid. It does not predict or guarantee acceptance by an applicant tracking system or recruiter.
 
 ## JSON backups
 
@@ -96,7 +108,7 @@ Backups may include the compressed profile photo. Treat the downloaded file as p
 
 ## Next stages
 
-Future releases will add ATS analysis, advanced PDF and multi-page output, PWA support, and broader interface tests.
+The finalization stage will add PWA support, offline caching, accessibility refinement, broader interface tests, and production optimization.
 
 ## License
 
