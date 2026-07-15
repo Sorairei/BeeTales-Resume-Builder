@@ -1,6 +1,10 @@
 @media print {
   @page resume-a4 { size: A4; margin: 0; }
   @page resume-letter { size: Letter; margin: 0; }
+  html, body, .resume-page, .resume-page * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
   body { background: #fff !important; }
   body::before, .app-header, .privacy-banner, .mobile-tabs, .workspace-editor, .workspace-design, .workspace-review, .preview-toolbar, .page-marker, .overflow-warning { display: none !important; }
   .app-shell, .workspace, .workspace-preview, .preview-panel, .preview-body, .preview-scroll, .page-stage { display: block !important; width: auto !important; height: auto !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; background: #fff !important; }
