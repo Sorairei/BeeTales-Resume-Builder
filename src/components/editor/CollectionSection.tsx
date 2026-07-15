@@ -43,15 +43,15 @@ export function CollectionSection<T extends Identified>({
       {beforeList}
       <div className="item-stack">
         {items.map((item, index) => (
-          <article className="experience-card collection-card" key={item.id}>
+          <article className="experience-card collection-card" key={item.id} aria-posinset={index + 1} aria-setsize={items.length}>
             <header>
-              <span className="item-number">{index + 1}</span>
+              <span className="item-number" aria-hidden="true">{index + 1}</span>
               <div><strong>{getItemTitle(item, index)}</strong>{getItemSubtitle && <small>{getItemSubtitle(item)}</small>}</div>
               <div className="item-actions">
-                <button type="button" title={t("moveUp")} disabled={index === 0} onClick={() => onChange(moveItem(items, index, -1))}><ArrowUp size={15} /></button>
-                <button type="button" title={t("moveDown")} disabled={index === items.length - 1} onClick={() => onChange(moveItem(items, index, 1))}><ArrowDown size={15} /></button>
-                {allowDuplicate && <button type="button" title={t("duplicateItem")} onClick={() => duplicate(item, index)}><Copy size={15} /></button>}
-                <button type="button" className="danger-icon" title={t("deleteItem")} onClick={() => remove(item.id)}><Trash2 size={15} /></button>
+                <button type="button" title={t("moveUp")} aria-label={t("moveUp")} disabled={index === 0} onClick={() => onChange(moveItem(items, index, -1))}><ArrowUp size={15} /></button>
+                <button type="button" title={t("moveDown")} aria-label={t("moveDown")} disabled={index === items.length - 1} onClick={() => onChange(moveItem(items, index, 1))}><ArrowDown size={15} /></button>
+                {allowDuplicate && <button type="button" title={t("duplicateItem")} aria-label={t("duplicateItem")} onClick={() => duplicate(item, index)}><Copy size={15} /></button>}
+                <button type="button" className="danger-icon" title={t("deleteItem")} aria-label={t("deleteItem")} onClick={() => remove(item.id)}><Trash2 size={15} /></button>
               </div>
             </header>
             {renderFields(item, (patch) => update(item.id, patch))}

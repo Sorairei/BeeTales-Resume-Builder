@@ -2,7 +2,7 @@
 
 BeeTales Resume Builder is a free, open-source web application for creating professional resumes without accounts, payments, watermarks, or uploading personal information to servers.
 
-This branch contains **Stages 1 through 5** of the project: a complete resume editor with four templates, validated backups, local ATS guidance, measured multi-page preview, and browser-native PDF output that preserves real text.
+This branch contains **Stages 1 through 6** and the production-ready **v1.0.0** release: a complete resume editor with four templates, validated backups, local ATS guidance, measured multi-page preview, browser-native PDF output, offline support, and a fully audited responsive interface.
 
 ## Privacy
 
@@ -40,6 +40,10 @@ Clearing browser storage also removes the saved resume. Export a JSON backup bef
 - Automatic local saving with a status indicator.
 - Browser-based printing.
 - BeeTales swamp visual identity, official swamp-space background, logo, and Sora mascot.
+- Installable PWA with offline caching scoped correctly for GitHub Pages.
+- Strict translation coverage for English, Spanish, Polish, and Portuguese.
+- Automatic repair of duplicated or invalid section ordering from older data.
+- Keyboard, focus, status-announcement, and responsive-layout accessibility refinements.
 
 ## Technologies
 
@@ -67,7 +71,7 @@ npm run preview
 
 ## GitHub Pages
 
-The `.github/workflows/deploy.yml` workflow automatically enables, builds, and publishes GitHub Pages from `main`. If repository policy prevents automatic enablement, select **Settings → Pages → Source → GitHub Actions** once.
+The `.github/workflows/deploy.yml` workflow builds and publishes GitHub Pages from `main`. Select **Settings → Pages → Source → GitHub Actions** once before the first deployment.
 
 Vite calculates `base` automatically from `GITHUB_REPOSITORY` during GitHub Actions. Project sites are published under `/repository-name/`, while repositories named `username.github.io` use `/`. Local development uses `/`.
 
@@ -106,9 +110,9 @@ Open **Data and backups** in the editor to export a portable `.json` file. Impor
 
 Backups may include the compressed profile photo. Treat the downloaded file as personal information and store it securely.
 
-## Next stages
+## Release status
 
-The finalization stage will add PWA support, offline caching, accessibility refinement, broader interface tests, and production optimization.
+Version 1.0.0 completes the planned stages. Production checks cover ordering normalization, unique templates and palettes, complete translations, responsive menus, accessibility labels, PWA files, static GitHub Pages paths, and browser-native printing.
 
 ## License
 

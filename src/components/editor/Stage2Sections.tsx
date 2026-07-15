@@ -4,6 +4,7 @@ import type { TranslationKey, Translator } from "../../data/translations";
 import type { CertificationItem, CourseItem, CustomSection, EducationItem, LanguageItem, ProjectItem, ReferenceItem, ResumeData, SkillItem } from "../../types/resume";
 import { createId } from "../../utils/id";
 import { moveItem } from "../../utils/arrays";
+import { normalizeHiddenSections, normalizeSectionOrder } from "../../utils/sectionOrder";
 import { isValidEmail, isValidPhone, isValidWebAddress } from "../../utils/validation";
 import { CollectionSection } from "./CollectionSection";
 
@@ -132,7 +133,8 @@ export function Stage2Sections({ resume, setResume, t }: Props) {
             .filter((id) => fixed.has(id) || ids.has(id))
             .map((id) => fixed.has(id) ? id : customIds[customIndex++]);
           while (customIndex < customIds.length) sectionOrder.push(customIds[customIndex++]);
-          return { ...current, customSections: items, sectionOrder, hiddenSections: current.hiddenSections.filter((id) => fixed.has(id) || ids.has(id)) };
+          const normalizedOrder = normalizeSectionOrder(sectionOrder, customIds);
+          return { ...current, customSections: items, sectionOrder: normalizedOrder, hiddenSections: normalizeHiddenSections(current.hiddenSections, normalizedOrder) };
         })}
         createItem={() => ({ id: createId("custom"), title: "", description: "", items: [], hidden: false })}
         getItemTitle={(item) => item.title || t("newCustomSection")} getItemSubtitle={(item) => `${item.items.length} ${t("items")}`}
@@ -144,7 +146,7 @@ export function Stage2Sections({ resume, setResume, t }: Props) {
           </div>
           <div className="custom-items">
             {section.items.map((item, index) => <div className="custom-item" key={item.id}>
-              <div className="custom-item-heading"><strong>{t("item")} {index + 1}</strong><div className="custom-item-actions"><button type="button" title={t("moveUp")} disabled={index === 0} onClick={() => updateSection({ items: moveItem(section.items, index, -1) })}><ArrowUp size={14} /></button><button type="button" title={t("moveDown")} disabled={index === section.items.length - 1} onClick={() => updateSection({ items: moveItem(section.items, index, 1) })}><ArrowDown size={14} /></button><button type="button" title={t("deleteItem")} onClick={() => updateSection({ items: section.items.filter((entry) => entry.id !== item.id) })}><Trash2 size={14} /></button></div></div>
+              <div className="custom-item-heading"><strong>{t("item")} {index + 1}</strong><div className="custom-item-actions"><button type="button" title={t("moveUp")} aria-label={t("moveUp")} disabled={index === 0} onClick={() => updateSection({ items: moveItem(section.items, index, -1) })}><ArrowUp size={14} /></button><button type="button" title={t("moveDown")} aria-label={t("moveDown")} disabled={index === section.items.length - 1} onClick={() => updateSection({ items: moveItem(section.items, index, 1) })}><ArrowDown size={14} /></button><button type="button" title={t("deleteItem")} aria-label={t("deleteItem")} onClick={() => updateSection({ items: section.items.filter((entry) => entry.id !== item.id) })}><Trash2 size={14} /></button></div></div>
               <div className="form-grid compact-grid">
                 {field(t("itemTitle"), <input value={item.title} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, title: e.target.value } : entry) })} />)}
                 {field(t("dateRange"), <div className="date-pair"><input value={item.startDate} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, startDate: e.target.value } : entry) })} placeholder={t("startDate")} /><input value={item.endDate} onChange={(e) => updateSection({ items: section.items.map((entry) => entry.id === item.id ? { ...entry, endDate: e.target.value } : entry) })} placeholder={t("endDate")} /></div>)}

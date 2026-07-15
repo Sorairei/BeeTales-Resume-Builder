@@ -5,6 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Eye, EyeOff, GripVertical, ListTree } from "lucide-react";
 import type { TranslationKey, Translator } from "../../data/translations";
 import type { ResumeData } from "../../types/resume";
+import { normalizeSectionOrder } from "../../utils/sectionOrder";
 import { Accordion } from "./Accordion";
 
 interface Props { resume: ResumeData; setResume: Dispatch<SetStateAction<ResumeData>>; t: Translator; }
@@ -20,9 +21,7 @@ export function SectionManager({ resume, setResume, t }: Props) {
     useSensor(TouchSensor, { activationConstraint: { delay: 180, tolerance: 5 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
-  const validIds = new Set([...Object.keys(fixedLabels), ...resume.customSections.map((section) => section.id)]);
-  const ids = resume.sectionOrder.filter((id) => validIds.has(id));
-  validIds.forEach((id) => { if (!ids.includes(id)) ids.push(id); });
+  const ids = normalizeSectionOrder(resume.sectionOrder, resume.customSections.map((section) => section.id));
 
   const labelFor = (id: string) => fixedLabels[id] ? t(fixedLabels[id]) : resume.customSections.find((section) => section.id === id)?.title || t("newCustomSection");
   const onDragEnd = ({ active, over }: DragEndEvent) => {
@@ -53,9 +52,9 @@ function SortableSection({ id, label, hidden, onToggle, t }: { id: string; label
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
   return (
     <div ref={setNodeRef} className={`section-sort-item ${isDragging ? "is-dragging" : ""} ${hidden ? "is-hidden-section" : ""}`} style={{ transform: CSS.Transform.toString(transform), transition }}>
-      <button type="button" className="drag-handle" title={t("dragSection")} {...attributes} {...listeners}><GripVertical size={17} /></button>
+      <button type="button" className="drag-handle" title={t("dragSection")} aria-label={t("dragSection")} {...attributes} {...listeners}><GripVertical size={17} /></button>
       <span>{label}</span>
-      <button type="button" className="visibility-button" title={hidden ? t("showSection") : t("hideSection")} onClick={onToggle}>{hidden ? <EyeOff size={16} /> : <Eye size={16} />}<span>{hidden ? t("hidden") : t("visible")}</span></button>
+      <button type="button" className="visibility-button" title={hidden ? t("showSection") : t("hideSection")} aria-label={hidden ? t("showSection") : t("hideSection")} onClick={onToggle}>{hidden ? <EyeOff size={16} /> : <Eye size={16} />}<span>{hidden ? t("hidden") : t("visible")}</span></button>
     </div>
   );
 }

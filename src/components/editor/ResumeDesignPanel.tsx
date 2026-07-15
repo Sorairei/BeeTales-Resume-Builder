@@ -1,8 +1,9 @@
 import type { Dispatch, SetStateAction } from "react";
 import { AlertTriangle, Check, ImagePlus, LayoutTemplate, RotateCcw, Trash2 } from "lucide-react";
 import { palettes } from "../../data/palettes";
+import { resumeTemplates } from "../../data/resumeTemplates";
 import type { TranslationKey, Translator } from "../../data/translations";
-import type { ResumeData, ResumeSettings, ResumeTemplate } from "../../types/resume";
+import type { ResumeData, ResumeSettings } from "../../types/resume";
 import { contrastRatio, hasSafeAccentContrast } from "../../utils/contrast";
 import { Accordion } from "./Accordion";
 
@@ -17,13 +18,6 @@ interface Props {
   standalone?: boolean;
 }
 
-const templates: Array<{ id: ResumeTemplate; name: TranslationKey; description: TranslationKey; ats: TranslationKey; photo: boolean }> = [
-  { id: "ats-classic", name: "atsClassic", description: "atsTemplateDescription", ats: "atsHigh", photo: false },
-  { id: "modern", name: "modernTemplate", description: "modernTemplateDescription", ats: "atsMediumHigh", photo: true },
-  { id: "executive", name: "executiveTemplate", description: "executiveTemplateDescription", ats: "atsMediumHigh", photo: true },
-  { id: "two-column", name: "twoColumnTemplate", description: "twoColumnTemplateDescription", ats: "atsMedium", photo: true },
-];
-
 export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, uploadPhoto, removePhoto, standalone = false }: Props) {
   const settings = resume.settings;
   const update = (patch: Partial<ResumeSettings>) => setResume((current) => ({ ...current, settings: { ...current.settings, ...patch } }));
@@ -33,8 +27,8 @@ export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, 
   const content = <div className="design-panel-content">
     <div className="design-group">
       <div className="design-group-heading"><strong>{t("chooseTemplate")}</strong><span>{t("templateChangeSafe")}</span></div>
-      <div className="template-grid">{templates.map((template) => <button type="button" key={template.id} className={`template-card ${settings.template === template.id ? "selected" : ""}`} onClick={() => update({ template: template.id })}>
-        <span className={`template-thumbnail thumbnail-${template.id}`} aria-hidden="true"><i /><b /><em /></span>
+      <div className="template-grid">{resumeTemplates.map((template) => <button type="button" key={template.id} data-template={template.id} className={`template-card ${settings.template === template.id ? "selected" : ""}`} aria-pressed={settings.template === template.id} onClick={() => update({ template: template.id })}>
+        <span className={`template-thumbnail thumbnail-${template.id}`} aria-hidden="true"><span className="thumb-heading" /><span className="thumb-primary" /><span className="thumb-secondary" /><span className="thumb-tertiary" /></span>
         <span className="template-card-copy"><strong>{t(template.name)}</strong><small>{t(template.description)}</small><span>{t(template.ats)} · {template.photo ? t("photoAllowed") : t("noPhoto")}</span></span>
         {settings.template === template.id && <span className="template-selected"><Check size={14} /></span>}
       </button>)}</div>
@@ -43,8 +37,12 @@ export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, 
 
     <div className="design-group">
       <div className="design-group-heading"><strong>{t("accentColor")}</strong><span>{t("accentColorHelp")}</span></div>
-      <div className="palette-row">{palettes.map((palette) => <button type="button" key={palette.id} className={settings.accentColor.toLowerCase() === palette.color.toLowerCase() ? "selected" : ""} style={{ "--swatch": palette.color } as React.CSSProperties} title={t(`palette_${palette.id}` as TranslationKey)} onClick={() => update({ accentColor: palette.color })}><span /></button>)}</div>
-      <div className="custom-color-row"><label><span>{t("customColor")}</span><input type="color" value={settings.accentColor} onChange={(event) => update({ accentColor: event.target.value.toUpperCase() })} /></label><output>{settings.accentColor.toUpperCase()}</output><button type="button" className="mini-action" onClick={() => update({ accentColor: "#374151" })}><RotateCcw size={14} />{t("restoreDefault")}</button></div>
+      <div className="palette-row">{palettes.map((palette) => {
+        const label = t(`palette_${palette.id}` as TranslationKey);
+        const selected = settings.accentColor.toLowerCase() === palette.color.toLowerCase();
+        return <button type="button" key={palette.id} className={selected ? "selected" : ""} style={{ "--swatch": palette.color } as React.CSSProperties} title={label} aria-label={label} aria-pressed={selected} onClick={() => update({ accentColor: palette.color })}><span /></button>;
+      })}</div>
+      <div className="custom-color-row"><label><span>{t("customColor")}</span><input className="custom-color-input" aria-label={t("customColor")} type="color" value={settings.accentColor} onChange={(event) => update({ accentColor: event.target.value.toUpperCase() })} /></label><output>{settings.accentColor.toUpperCase()}</output><button type="button" className="mini-action" onClick={() => update({ accentColor: "#374151" })}><RotateCcw size={14} />{t("restoreDefault")}</button></div>
       <p className={`contrast-status ${safeContrast ? "safe" : "warning"}`}>{safeContrast ? <Check size={14} /> : <AlertTriangle size={14} />}{safeContrast ? t("contrastGood") : t("contrastWarning")} · {contrast.toFixed(1)}:1</p>
     </div>
 
@@ -81,5 +79,5 @@ export function ResumeDesignPanel({ resume, setResume, t, photoUrl, photoError, 
   </div>;
 
   if (standalone) return <section className="mobile-design-panel"><div className="panel-heading compact"><div className="panel-heading-icon"><LayoutTemplate size={19} /></div><div><span className="eyebrow">{t("design")}</span><h1>{t("resumeDesign")}</h1><p>{t("resumeDesignHelp")}</p></div></div>{content}</section>;
-  return <Accordion title={t("resumeDesign")} description={t("resumeDesignHelp")} icon={<LayoutTemplate size={18} />} badge={t("stageThree")}>{content}</Accordion>;
+  return <Accordion title={t("resumeDesign")} description={t("resumeDesignHelp")} icon={<LayoutTemplate size={18} />} badge={t("chooseTemplate")}>{content}</Accordion>;
 }

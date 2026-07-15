@@ -1,0 +1,25 @@
+{
+  "name": "BeeTales Resume Builder",
+  "short_name": "BeeTales Resume",
+  "description": "Create, store, and print a professional resume privately in your browser.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050b07",
+  "theme_color": "#050b07",
+  "icons": [
+    {
+      "src": "./assets/sora-avatar.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

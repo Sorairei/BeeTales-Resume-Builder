@@ -132,7 +132,7 @@ const en = {
 export type TranslationKey = keyof typeof en;
 export type Translator = (key: TranslationKey) => string;
 
-const es: Partial<Record<TranslationKey, string>> = {
+const es: Record<TranslationKey, string> = {
   privateByDesign: "Privado por diseño", browserOnly: "100% en tu navegador", savedLocally: "Guardado localmente", saving: "Guardando…", saveError: "Error al guardar",
   useExample: "Usar datos de ejemplo", useExampleShort: "Usar ejemplo", useExampleConfirm: "¿Reemplazar los datos actuales con el currículum de ejemplo?", emptyResume: "Crear currículum vacío", emptyResumeShort: "CV vacío", emptyResumeConfirm: "¿Crear un currículum vacío? Los datos actuales serán reemplazados.",
   privacyLead: "Tu información permanece en tu dispositivo.", privacyBody: "BeeTales Resume Builder no envía, almacena ni procesa tus datos personales en servidores externos.", soraAlt: "Sora, la mascota de BeeTales", appSections: "Secciones de la aplicación", edit: "Editar", preview: "Vista previa", editorAria: "Editor del currículum",
@@ -158,7 +158,7 @@ const es: Partial<Record<TranslationKey, string>> = {
   pageLower: "página", pagesLower: "páginas", fitWidth: "Ajustar al ancho", view100: "Ver al 100 %", downloadPdf: "Guardar PDF", savePdfHelp: "Abre el diálogo de impresión. Elige Guardar como PDF para conservar texto y enlaces seleccionables.", contentOverflow: "Aviso de contenido:", moreThanTwoPages: "el currículum supera dos páginas.", pageVeryFull: "la última página está muy llena y puede cambiar al imprimirse.",
 };
 
-const pl: Partial<Record<TranslationKey, string>> = {
+const pl: Record<TranslationKey, string> = {
   privateByDesign: "Prywatność w standardzie", browserOnly: "100% w Twojej przeglądarce", savedLocally: "Zapisano lokalnie", saving: "Zapisywanie…", saveError: "Błąd zapisu",
   useExample: "Użyj danych przykładowych", useExampleShort: "Użyj przykładu", useExampleConfirm: "Zastąpić obecne dane przykładowym CV?", emptyResume: "Utwórz puste CV", emptyResumeShort: "Puste CV", emptyResumeConfirm: "Utworzyć puste CV? Obecne dane zostaną zastąpione.",
   privacyLead: "Twoje dane pozostają na Twoim urządzeniu.", privacyBody: "BeeTales Resume Builder nie wysyła, nie przechowuje ani nie przetwarza Twoich danych osobowych na zewnętrznych serwerach.", soraAlt: "Sora, maskotka BeeTales", appSections: "Sekcje aplikacji", edit: "Edytuj", preview: "Podgląd", editorAria: "Edytor CV",
@@ -184,7 +184,7 @@ const pl: Partial<Record<TranslationKey, string>> = {
   pageLower: "strona", pagesLower: "strony", fitWidth: "Dopasuj do szerokości", view100: "Pokaż w 100%", downloadPdf: "Zapisz PDF", savePdfHelp: "Otwiera okno drukowania. Wybierz Zapisz jako PDF, aby zachować tekst i linki.", contentOverflow: "Ostrzeżenie o treści:", moreThanTwoPages: "CV ma więcej niż dwie strony.", pageVeryFull: "ostatnia strona jest bardzo pełna i może zmienić układ podczas drukowania.",
 };
 
-const pt: Partial<Record<TranslationKey, string>> = {
+const pt: Record<TranslationKey, string> = {
   privateByDesign: "Privacidade desde a concepção", browserOnly: "100% no seu navegador", savedLocally: "Salvo localmente", saving: "Salvando…", saveError: "Erro ao salvar",
   useExample: "Usar dados de exemplo", useExampleShort: "Usar exemplo", useExampleConfirm: "Substituir os dados atuais pelo currículo de exemplo?", emptyResume: "Criar currículo vazio", emptyResumeShort: "Currículo vazio", emptyResumeConfirm: "Criar um currículo vazio? Os dados atuais serão substituídos.",
   privacyLead: "Suas informações permanecem no seu dispositivo.", privacyBody: "O BeeTales Resume Builder não envia, armazena nem processa seus dados pessoais em servidores externos.", soraAlt: "Sora, mascote da BeeTales", appSections: "Seções do aplicativo", edit: "Editar", preview: "Visualização", editorAria: "Editor de currículo",

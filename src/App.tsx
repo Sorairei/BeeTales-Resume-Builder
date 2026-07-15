@@ -36,6 +36,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">{t("content")}</a>
       <header className="app-header">
         <BrandLogo />
         <div className="header-center"><Leaf size={14} /><span>{t("privateByDesign")}</span><i aria-hidden="true" /><span>{t("browserOnly")}</span></div>
@@ -50,7 +51,7 @@ export default function App() {
               <option value="pt">Português</option>
             </select>
           </label>
-          <span className={`save-state save-${resumeState.saveStatus}`}><span className="save-dot" />{resumeState.saveStatus === "saved" ? t("savedLocally") : resumeState.saveStatus === "saving" ? t("saving") : t("saveError")}</span>
+          <span className={`save-state save-${resumeState.saveStatus}`} role="status" aria-live="polite"><span className="save-dot" />{resumeState.saveStatus === "saved" ? t("savedLocally") : resumeState.saveStatus === "saving" ? t("saving") : t("saveError")}</span>
           <button type="button" className="quiet-action" aria-label={t("useExample")} onClick={confirmExample}><Sparkles size={16} /> <span>{t("useExampleShort")}</span></button>
           <button type="button" className="quiet-action" aria-label={t("emptyResume")} onClick={confirmEmpty}><RotateCcw size={16} /> <span>{t("emptyResumeShort")}</span></button>
         </div>
@@ -63,13 +64,13 @@ export default function App() {
       </div>
 
       <nav className="mobile-tabs" aria-label={t("appSections")}>
-        <button className={mobileTab === "edit" ? "active" : ""} onClick={() => setMobileTab("edit")}><FileText size={17} /> {t("edit")}</button>
-        <button className={mobileTab === "design" ? "active" : ""} onClick={() => setMobileTab("design")}><LayoutTemplate size={17} /> {t("design")}</button>
-        <button className={mobileTab === "review" ? "active" : ""} onClick={() => setMobileTab("review")}><SearchCheck size={17} /> {t("review")}</button>
-        <button className={mobileTab === "preview" ? "active" : ""} onClick={() => setMobileTab("preview")}><Eye size={17} /> {t("preview")}</button>
+        <button type="button" aria-pressed={mobileTab === "edit"} className={mobileTab === "edit" ? "active" : ""} onClick={() => setMobileTab("edit")}><FileText size={17} /> {t("edit")}</button>
+        <button type="button" aria-pressed={mobileTab === "design"} className={mobileTab === "design" ? "active" : ""} onClick={() => setMobileTab("design")}><LayoutTemplate size={17} /> {t("design")}</button>
+        <button type="button" aria-pressed={mobileTab === "review"} className={mobileTab === "review" ? "active" : ""} onClick={() => setMobileTab("review")}><SearchCheck size={17} /> {t("review")}</button>
+        <button type="button" aria-pressed={mobileTab === "preview"} className={mobileTab === "preview" ? "active" : ""} onClick={() => setMobileTab("preview")}><Eye size={17} /> {t("preview")}</button>
       </nav>
 
-      <main className="workspace">
+      <main className="workspace" id="main-content">
         <div className={`workspace-editor ${mobileTab !== "edit" ? "mobile-hidden" : ""}`}><EditorPanel {...resumeState} pageCount={pageCount} t={t} /></div>
         <div className={`workspace-design ${mobileTab !== "design" ? "mobile-hidden" : ""}`}><ResumeDesignPanel resume={resumeState.resume} setResume={resumeState.setResume} t={t} photoUrl={resumeState.photoUrl} photoError={resumeState.photoError} uploadPhoto={resumeState.uploadPhoto} removePhoto={resumeState.removePhoto} standalone /></div>
         <div className={`workspace-review ${mobileTab !== "review" ? "mobile-hidden" : ""}`}><AtsReviewPanel resume={resumeState.resume} pageCount={pageCount} t={t} standalone /></div>

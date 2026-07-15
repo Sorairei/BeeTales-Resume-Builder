@@ -1,6 +1,7 @@
 import { emptyResume } from "../data/emptyResume";
 import type { ResumeData } from "../types/resume";
 import { resumeSchema } from "./resumeSchema";
+import { normalizeHiddenSections, normalizeSectionOrder } from "./sectionOrder";
 
 export const CURRENT_DATA_VERSION = 4;
 
@@ -27,5 +28,7 @@ export function migrateResumeData(input: unknown): ResumeData {
   };
   const result = resumeSchema.safeParse(candidate);
   if (!result.success) throw new Error("invalid-structure");
-  return result.data as ResumeData;
+  const parsed = result.data as ResumeData;
+  const sectionOrder = normalizeSectionOrder(parsed.sectionOrder, parsed.customSections.map((section) => section.id));
+  return { ...parsed, sectionOrder, hiddenSections: normalizeHiddenSections(parsed.hiddenSections, sectionOrder) };
 }

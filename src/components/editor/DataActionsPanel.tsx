@@ -48,7 +48,7 @@ export function DataActionsPanel({ exportBackup, importBackup, deleteAllData, t 
     finally { setBusy(false); }
   };
 
-  return <Accordion title={t("dataAndBackups")} description={t("dataAndBackupsHelp")} icon={<DatabaseBackup size={18} />} badge={t("stageFour")}>
+  return <Accordion title={t("dataAndBackups")} description={t("dataAndBackupsHelp")} icon={<DatabaseBackup size={18} />} badge={t("savedLocally")}>
     <div className="data-actions-intro"><ShieldCheck size={17} /><p><strong>{t("backupPrivacyTitle")}</strong>{t("backupPrivacyBody")}</p></div>
     <div className="data-action-grid">
       <button type="button" onClick={() => void runExport()} disabled={busy}><Download size={17} /><span><strong>{t("exportJson")}</strong><small>{t("exportJsonHelp")}</small></span></button>
