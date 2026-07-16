@@ -827,7 +827,7 @@ a:focus-visible {
 
 @media (max-width: 900px) {
   .app-header { background: #fff; }
-  .workspace { min-height: calc(100vh - 202px); background: #f3f5f0; }
+  .workspace { height: auto; min-height: calc(100vh - 202px); background: #f3f5f0; }
   .editor-panel { border-right: 0; }
   .preview-panel { background: #113724; }
   .app-footer { flex-wrap: wrap; gap: 8px 18px; padding: 10px 14px; }
