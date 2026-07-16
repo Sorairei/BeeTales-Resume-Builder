@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { Clipboard, CodeXml, Download, FileUp, RefreshCw, Save } from "lucide-react";
 import type { TranslationKey, Translator } from "../../data/translations";
+import { useConfirmDialog } from "../../contexts/confirmDialog";
 import { downloadTextResume, parseTextResume, readTextResumeFile, serializeTextResume, type TextResumeFormat } from "../../services/textModeService";
 import type { ResumeData } from "../../types/resume";
 
@@ -16,6 +17,7 @@ export function TextModeContent({ resume, setResume, t }: Props) {
   const [format, setFormat] = useState<TextResumeFormat>("yaml");
   const [draftOverride, setDraftOverride] = useState<string | null>(null);
   const [status, setStatus] = useState<TextStatus>("synced");
+  const confirm = useConfirmDialog();
   const canonicalText = useMemo(() => serializeTextResume(resume, format), [format, resume]);
   const draft = draftOverride ?? canonicalText;
 
@@ -57,7 +59,7 @@ export function TextModeContent({ resume, setResume, t }: Props) {
   };
 
   const importFile = async (file: File) => {
-    if (!window.confirm(t("textImportConfirm"))) return;
+    if (!await confirm({ title: t("textImport"), message: t("textImportConfirm"), confirmLabel: t("textImport"), cancelLabel: t("cancel"), closeLabel: t("closeDialog") })) return;
     try {
       const importedFormat: TextResumeFormat = file.name.toLowerCase().endsWith(".md") ? "markdown" : "yaml";
       const content = await readTextResumeFile(file);

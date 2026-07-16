@@ -6,6 +6,7 @@ import { EditorPanel } from "./components/editor/EditorPanel";
 import { ResumeDesignPanel } from "./components/editor/ResumeDesignPanel";
 import { PreviewPanel } from "./components/preview/PreviewPanel";
 import { getTranslator } from "./data/translations";
+import { useConfirmDialog } from "./contexts/confirmDialog";
 import { useResume } from "./hooks/useResume";
 import type { AppLanguage } from "./types/resume";
 
@@ -15,6 +16,7 @@ export default function App() {
   const resumeState = useResume();
   const [mobileTab, setMobileTab] = useState<MobileTab>("edit");
   const [pageCount, setPageCount] = useState(1);
+  const confirm = useConfirmDialog();
   const t = getTranslator(resumeState.resume.language);
 
   useEffect(() => {
@@ -22,12 +24,12 @@ export default function App() {
     document.title = "BeeTales Resume Builder";
   }, [resumeState.resume.language]);
 
-  const confirmEmpty = () => {
-    if (window.confirm(t("emptyResumeConfirm"))) resumeState.createEmpty();
+  const confirmEmpty = async () => {
+    if (await confirm({ title: t("emptyResume"), message: t("emptyResumeConfirm"), confirmLabel: t("emptyResumeShort"), cancelLabel: t("cancel"), closeLabel: t("closeDialog"), tone: "danger" })) resumeState.createEmpty();
   };
 
-  const confirmExample = () => {
-    if (window.confirm(t("useExampleConfirm"))) resumeState.useExample();
+  const confirmExample = async () => {
+    if (await confirm({ title: t("useExample"), message: t("useExampleConfirm"), confirmLabel: t("useExampleShort"), cancelLabel: t("cancel"), closeLabel: t("closeDialog") })) resumeState.useExample();
   };
 
   const changeLanguage = (language: AppLanguage) => {
@@ -52,8 +54,8 @@ export default function App() {
             </select>
           </label>
           <span className={`save-state save-${resumeState.saveStatus}`} role="status" aria-live="polite"><span className="save-dot" />{resumeState.saveStatus === "saved" ? t("savedLocally") : resumeState.saveStatus === "saving" ? t("saving") : t("saveError")}</span>
-          <button type="button" className="quiet-action" aria-label={t("useExample")} onClick={confirmExample}><Sparkles size={16} /> <span>{t("useExampleShort")}</span></button>
-          <button type="button" className="quiet-action" aria-label={t("emptyResume")} onClick={confirmEmpty}><RotateCcw size={16} /> <span>{t("emptyResumeShort")}</span></button>
+          <button type="button" className="quiet-action" aria-label={t("useExample")} onClick={() => void confirmExample()}><Sparkles size={16} /> <span>{t("useExampleShort")}</span></button>
+          <button type="button" className="quiet-action" aria-label={t("emptyResume")} onClick={() => void confirmEmpty()}><RotateCcw size={16} /> <span>{t("emptyResumeShort")}</span></button>
         </div>
       </header>
 

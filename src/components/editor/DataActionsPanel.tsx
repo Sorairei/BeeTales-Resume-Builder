@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DatabaseBackup, Download, ShieldCheck, Trash2, Upload } from "lucide-react";
 import type { TranslationKey, Translator } from "../../data/translations";
+import { useConfirmDialog } from "../../contexts/confirmDialog";
 import { Accordion } from "./Accordion";
 
 interface Props {
@@ -24,6 +25,7 @@ function errorMessage(error: unknown): MessageKey {
 export function DataActionsPanel({ exportBackup, importBackup, deleteAllData, t }: Props) {
   const [message, setMessage] = useState<MessageKey>();
   const [busy, setBusy] = useState(false);
+  const confirm = useConfirmDialog();
 
   const runExport = async () => {
     setBusy(true); setMessage(undefined);
@@ -33,7 +35,7 @@ export function DataActionsPanel({ exportBackup, importBackup, deleteAllData, t 
   };
 
   const runImport = async (file: File) => {
-    if (!window.confirm(t("importBackupConfirm"))) return;
+    if (!await confirm({ title: t("importJson"), message: t("importBackupConfirm"), confirmLabel: t("importJson"), cancelLabel: t("cancel"), closeLabel: t("closeDialog") })) return;
     setBusy(true); setMessage(undefined);
     try { await importBackup(file); setMessage("backupImported"); }
     catch (error) { setMessage(errorMessage(error)); }
@@ -41,7 +43,7 @@ export function DataActionsPanel({ exportBackup, importBackup, deleteAllData, t 
   };
 
   const runDelete = async () => {
-    if (!window.confirm(t("deleteAllConfirm"))) return;
+    if (!await confirm({ title: t("deleteAllData"), message: t("deleteAllConfirm"), confirmLabel: t("emptyResumeShort"), cancelLabel: t("cancel"), closeLabel: t("closeDialog"), tone: "danger" })) return;
     setBusy(true); setMessage(undefined);
     try { await deleteAllData(); setMessage("allDataDeleted"); }
     catch { setMessage("exportFailed"); }
