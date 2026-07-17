@@ -1,5 +1,6 @@
 import { parse, stringify } from "yaml";
 import type { ResumeData } from "../types/resume";
+import { textResumeFileName } from "../utils/fileNames";
 import { migrateResumeData } from "../utils/migrations";
 
 export type TextResumeFormat = "yaml" | "markdown";
@@ -78,13 +79,12 @@ export async function readTextResumeFile(file: File): Promise<string> {
 }
 
 export function downloadTextResume(content: string, format: TextResumeFormat, fullName: string): void {
-  const safeName = fullName.trim().replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() || "resume";
   const extension = format === "yaml" ? "yaml" : "md";
   const blob = new Blob([content], { type: format === "yaml" ? "application/yaml" : "text/markdown" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = `${safeName}.${extension}`;
+  anchor.download = textResumeFileName(fullName, extension);
   anchor.click();
-  URL.revokeObjectURL(url);
+  window.setTimeout(() => URL.revokeObjectURL(url), 0);
 }

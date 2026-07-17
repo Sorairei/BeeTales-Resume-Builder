@@ -9,3 +9,7 @@ export function resumeBackupFileName(fullName: string, date = new Date()): strin
 export function resumePdfFileName(fullName: string): string {
   return `resume-${safeName(fullName)}.pdf`;
 }
+
+export function textResumeFileName(fullName: string, extension: "yaml" | "md"): string {
+  return `${safeName(fullName)}.${extension}`;
+}

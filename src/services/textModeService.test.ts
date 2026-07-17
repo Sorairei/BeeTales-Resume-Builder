@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { defaultResume } from "../data/defaultResume";
+import { textResumeFileName } from "../utils/fileNames";
 import { parseTextResume, serializeTextResume } from "./textModeService";
 
 describe("text resume synchronization", () => {
@@ -34,5 +35,10 @@ describe("text resume synchronization", () => {
   it("rejects invalid or incomplete structured text", () => {
     expect(() => parseTextResume("personal: [", "yaml", defaultResume)).toThrow("invalid-text");
     expect(() => parseTextResume("# Missing front matter", "markdown", defaultResume)).toThrow("invalid-text");
+  });
+
+  it("creates portable text export file names", () => {
+    expect(textResumeFileName("María López", "yaml")).toBe("maria-lopez.yaml");
+    expect(textResumeFileName("", "md")).toBe("resume.md");
   });
 });
