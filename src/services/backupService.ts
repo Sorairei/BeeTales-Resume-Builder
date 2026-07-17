@@ -15,6 +15,10 @@ const backupEnvelopeSchema = z.object({
 
 export interface ImportedBackup { resume: ResumeData; photo?: Blob; }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function blobToDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -63,6 +67,10 @@ export async function readBackupFile(file: File): Promise<ImportedBackup> {
   const envelopeResult = backupEnvelopeSchema.safeParse(parsed);
   if (envelopeResult.success) {
     return { resume: migrateResumeData(envelopeResult.data.resume), photo: envelopeResult.data.photo ? dataUrlToBlob(envelopeResult.data.photo) : undefined };
+  }
+  if (isRecord(parsed) && parsed.format === "beetales-resume-builder") {
+    if (parsed.backupVersion !== 1) throw new Error("incompatible-version");
+    throw new Error("invalid-structure");
   }
   try { return { resume: migrateResumeData(parsed) }; }
   catch (error) { throw error instanceof Error ? error : new Error("invalid-structure"); }
